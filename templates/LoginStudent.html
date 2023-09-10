@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register Company</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css')}}" />
+
+	<nav>
+		<div class="homeNav">
+			<a href="#">Home</a>
+		</div>
+		<div class="otherNav">			
+			<a href="#">Company</a>
+			<a href="#">Uni Supervisor</a>
+			<a href="#">Admin</a>
+			<a href="#">Student</a>
+		</div>
+	</nav>
+</head>
+
+<body>
+	<h1>Student Login</h1>
+	<form action="/addemp" autocomplete="on" method="POST" enctype="multipart/form-data">
+
+		<!-- <button type="submit" formaction="/getemp" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br> -->
+		<table>
+			<tr>
+				<td>
+					<label class="labelEmail">Student Email:</label>
+				</td>
+				<td>
+					<input class="textEmail" type="email" name="textEmail" autofocus size="40">
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<label class="labelIc">IC Number</label>
+				</td>
+				<td>
+					<input class="textIc" type="password" name="textIc">
+				</td>
+			</tr>
+		</table>
+		<button class="submitBtn" type="submit">Login</button>	
+
+	</form>
+	<!-- <a href="/about">About Us</a> -->
+</body>
+
+
+</html>
