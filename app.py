@@ -119,7 +119,7 @@ def verifyLogin():
             return render_template('StudentHomePage.html')
         else:
             # User not found, login failed
-            return render_template('testing.html')
+            return render_template('LoginStudent.html',msg="Access Denied: Invalid Email or Ic Number")
 
 
 if __name__ == '__main__':
