@@ -3,8 +3,8 @@
 
 #!/bin/bash
 dnf install git -y
-git clone https://github.com/lowchoonkeat/aws-live.git
+git clone [https://github.com/lowchoonkeat/aws-live.git](https://github.com/yongsean/cloudAssignment.git)
 cd aws-live
 dnf install python-pip -y
 pip3 install flask pymysql boto3
-python3 EmpApp.py
+python3 app.py
