@@ -108,7 +108,7 @@ def verifyLogin():
 
         # Query the database to check if the email and IC number match a record
         cursor = db_conn.cursor()
-        query = "SELECT * FROM student WHERE StudentIc = %s AND Email = %s"
+        query = "SELECT * FROM student WHERE IC = %s AND email = %s"
         cursor.execute(query, (StudentIc, Email))
         user = cursor.fetchone()
         cursor.close()
