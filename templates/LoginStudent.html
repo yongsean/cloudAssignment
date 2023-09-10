@@ -205,14 +205,14 @@
 		color: #444444;
 	}
 
-	.student-login-form input {
+	.student-login-form input , .student-login-form button{
 		width: 100%;
 		padding: 10px;
 		margin-bottom: 10px;
 		border-radius: 3px;
 	}
 
-	.student-login-form input[type="submit"] {
+	.student-login-form button[type="submit"] {
 		background-color: white;
 		cursor: pointer;
 		border: 1px solid #ccc;
@@ -230,7 +230,7 @@
 		margin: 5px;
 	}
 
-	.student-login-form input[type="submit"]:hover {
+	.student-login-form button[type="submit"]:hover {
 		background-color: #C4C4C4;
 		cursor: pointer;
 	}
@@ -279,13 +279,13 @@
 
 	<nav>
 		<div class="homeNav">
-			<a href="#">Home</a>
+			<a href="home">Home</a>
 		</div>
 		<div class="otherNav">
 			<a href="#">Company</a>
 			<a href="#">Uni Supervisor</a>
 			<a href="#">Admin</a>
-			<a href="LoginStudent.html">Student</a>
+			<a href="/login_student">Student</a>
 		</div>
 	</nav>
 </head>
@@ -324,7 +324,7 @@
 						<tr>
 							<td></td>
 							<td>
-								<input type="submit" value="Login">
+								<button type="submit" value="Login">Login</button>
 							</td>
 						</tr>
 					</table>
