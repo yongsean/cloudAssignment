@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from pymysql import connections
 import os
 import boto3
@@ -41,7 +41,9 @@ def login_company():
 def login_student():
     return render_template('LoginStudent.html')
 
-
+@app.route('/student_HomePage')
+def student_HomePage():
+    return render_template('StudentHomePage.html')
 
 
 @app.route("/about", methods=['POST'])
@@ -113,7 +115,8 @@ def verifyLogin():
 
         if user:
             # User found in the database, login successful
-            return "Login Successful"
+            # Redirect to the student home page
+            return redirect(url_for('student_HomePage'))
         else:
             # User not found, login failed
             return "Login Failed"
