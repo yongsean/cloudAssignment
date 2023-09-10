@@ -4,7 +4,7 @@
 #!/bin/bash
 dnf install git -y
 git clone [https://github.com/lowchoonkeat/aws-live.git](https://github.com/yongsean/cloudAssignment.git)
-cd aws-live
+cd cloudAssignment
 dnf install python-pip -y
 pip3 install flask pymysql boto3
 python3 app.py
