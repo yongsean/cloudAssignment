@@ -21,7 +21,14 @@
             </div>
             <a href="#">Uni Supervisor</a>
             <a href="#">Admin</a>
-            <a href="/login_student">Student</a>
+            <div class="dropdown">
+                <a class="dropdown-button" onclick="toggleDropdown()">Student</a>
+                <div id="dropdownOptions" class="dropdown-content-student">
+                    <a href="/login_student">Sign Up</a>
+                    <a href="/login_student">Login</a>
+                </div>
+
+            </div>
         </div>
 
     </nav>
