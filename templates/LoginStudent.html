@@ -217,7 +217,7 @@
 		cursor: pointer;
 		border: 1px solid #ccc;
 		width: 10%;
-		margin:5px;
+		margin: 5px;
 	}
 
 	.student-login-form input[type="email"],
@@ -227,7 +227,7 @@
 		width: 30%;
 		border: 1px solid #ccc;
 		padding: 8px;
-		margin:5px;
+		margin: 5px;
 	}
 
 	.student-login-form input[type="submit"]:hover {
@@ -239,7 +239,7 @@
 	.label-login-student-ic {
 		font-weight: bold;
 		color: #404040;
-		
+
 	}
 
 	.student-login-form a {
@@ -256,19 +256,19 @@
 		display: flex;
 	}
 
-	.login-sub-container{
+	.login-sub-container {
 		margin-left: 70px;
 		margin-top: 20px;
 		margin-bottom: 20px;
 	}
 
-	.student-login-table{
+	.student-login-table {
 		width: 100%;
 	}
 
 	td.row-email {
-    width: 120px;
-}
+		width: 120px;
+	}
 </style>
 
 <head>
@@ -292,48 +292,48 @@
 
 <body>
 	<form action="/verifyLogin" autocomplete="on" method="post">
-	<div class="container-student-login">
-		<div class="student-login-form">
-			<h1>Student Login</h1>
-			<hr class="student-login-line">
-			<div class="login-sub-container">
-				<table class="student-login-table">
-					<tr>
-						<td class="row-email">
-							<label class="label-login-student-email">Student Email</label>
-						</td>
-						<td>
-							<input type="email" placeholder="Student Email">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="label-login-student-ic">IC Number</label>
-						</td>
-						<td class="row-ic">
-							<input type="text" placeholder="IC Number" pattern="[0-9]{12}"
-							title="Please enter a valid IC number">
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<a href="#">Sign up</a>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<input type="submit" value="Login">
-						</td>
-					</tr>
-				</table>
-				
+		<div class="container-student-login">
+			<div class="student-login-form">
+				<h1>Student Login</h1>
+				<hr class="student-login-line">
+				<div class="login-sub-container">
+					<table class="student-login-table">
+						<tr>
+							<td class="row-email">
+								<label class="label-login-student-email">Student Email</label>
+							</td>
+							<td>
+								<input type="email" name="studentEmail" placeholder="Student Email">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="label-login-student-ic">IC Number</label>
+							</td>
+							<td class="row-ic">
+								<input type="text" name="studentIc" placeholder="IC Number" pattern="[0-9]{12}"
+									title="Please enter a valid IC number">
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<a href="#">Sign up</a>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type="submit" value="Login">
+							</td>
+						</tr>
+					</table>
+
+				</div>
+				<hr class="student-login-line">
 			</div>
-			<hr class="student-login-line">
 		</div>
-	</div>
-</form>
+	</form>
 </body>
 
 </html>
