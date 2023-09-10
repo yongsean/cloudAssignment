@@ -37,7 +37,9 @@ def register_company():
 def login_company():
     return render_template('LoginCompany.html')
 
-
+@app.route('/login_student')
+def login_student():
+    return render_template('LoginStudent.html')
 
 
 
