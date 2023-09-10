@@ -98,6 +98,26 @@ def AddEmp():
     print("all modification done...")
     return render_template('EditCompanyProfile.html', name=emp_name)
 
+@app.route("/verifyLogin", methods=['POST'])
+def verifyLogin():
+    if request.method == 'POST':
+        student_ic = request.form['StudentIc']
+        student_email = request.form['Email']
+
+        # Query the database to check if the email and IC number match a record
+        cursor = db_conn.cursor()
+        query = "SELECT * FROM student WHERE StudentIc = %s AND Email = %s"
+        cursor.execute(query, (student_ic, student_email))
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user:
+            # User found in the database, login successful
+            return "Login Successful"
+        else:
+            # User not found, login failed
+            return "Login Failed"
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
