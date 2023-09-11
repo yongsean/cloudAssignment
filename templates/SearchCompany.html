@@ -380,8 +380,8 @@
 
         </div>
         <div class="job-container">
-            <div class="job-listing">  
-                {% for job in jobs %}
+            <div class="job-listing">
+            {% for job in jobs %}
                 <div class="job-ad">
                     <div class="job-text-adjust">
                         <table class="job-content">
@@ -410,22 +410,30 @@
                                 <td>{{ job.salary }}</td>
                             </tr>
                             <tr>
-                                <th>State</th>
-                                <td>{{ job.state }}</td>
-                            </tr>
-                            <tr>
-                                <th>Allowance Range</th>
-                                <td>{{ job.allowance_range }}</td>
+                                <th>Open For</th>
+                                <td>{{ job.job_requirement }}</td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td><button>VIEW</button></td>
                             </tr>
-                            
                         </table>
                     </div>
                 </div>
-                {% endfor %}
+            {% endfor %}
+                <div class="job-ad">
+                    <div class="job-text-adjust">
+                        <h2>Company: techies</h2>
+                        <h3>Job Title: eg Web Developer</h3>
+                        <p>Location: Tunku Abdul Rahman University College</p>
+                        <p>Allowance: RM 300.00 - RM 300.00</p>
+                        <p>State: Open For Diploma & Degree</p>
+                        <p>Allowance Range: RM300.00-RM1000.00</p>
+                        <p>Posted: 13 HOURS AGO</p>
+                        <button>VIEW</button>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
