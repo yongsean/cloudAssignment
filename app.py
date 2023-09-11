@@ -127,9 +127,8 @@ def displayAllJobs():
     if search_state != 'All':
         select_sql += f" AND job_location = '{search_state}'"
 
-    # Parse the allowance range
-    min_allowance, max_allowance = map(int, search_allowance.split('-'))
-    select_sql += f" AND salary >= {min_allowance} AND salary <= {max_allowance}"
+    if search_allowance:
+            select_sql += f" AND salary <= {search_allowance}"
 
     cursor = db_conn.cursor()
 
