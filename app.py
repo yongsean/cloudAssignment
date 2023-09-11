@@ -160,14 +160,13 @@ def displayAllJobs():
 
             job_objects.append(job_object)
 
-        return job_objects
-
     except Exception as e:
         return str(e)
 
     finally:
         cursor.close()
         db_conn.close()
+        return render_template('SearchCompany.html', jobs=job_objects)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
