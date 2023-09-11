@@ -158,12 +158,14 @@ def displayAllJobs():
             # Get the company name from the database
             select_company_sql = "SELECT name FROM company WHERE companyId = %s"
             cursor.execute(select_company_sql, (company_id,))
-            company_name = cursor.fetchone()[0]
+            company_result = cursor.fetchone()
+            company_name = company_result[0] if company_result else ''
 
             # Get the industry name from the database
             select_industry_sql = "SELECT name FROM industry WHERE industryId = %s"
             cursor.execute(select_industry_sql, (industry_id,))
-            industry_name = cursor.fetchone()[0]
+            industry_result = cursor.fetchone()
+            industry_name = industry_result[0] if industry_result else ''
 
             job_object = {
                 "job_id": job_id,
@@ -189,6 +191,7 @@ def displayAllJobs():
         db_conn.close()
 
     return render_template('SearchCompany.html', jobs=job_objects)
+
 
 
 if __name__ == '__main__':
