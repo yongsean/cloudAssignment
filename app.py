@@ -106,7 +106,7 @@ def verifyLogin():
             # User not found, login failed
             return render_template('LoginStudent.html',msg="Access Denied: Invalid Email or Ic Number")
         
-@app.route("/displayJobFind", methods=['POST'])
+@app.route("/displayJobFind", methods=['POST','GET'])
 def displayAllJobs():
     # Get all the jobs from the database
     select_sql = "SELECT * FROM job"
