@@ -112,7 +112,7 @@ def displayAllJobs():
     search_company = request.form.get('search-company', '')
     search_title = request.form.get('search-title', '')
     search_state = request.form.get('search-state', 'All')
-    search_allowance = request.form.get('search-allowance', '300')
+    search_allowance = request.form.get('search-allowance', '1800')
 
     # Construct the base SQL query
     select_sql = "SELECT * FROM job WHERE 1"
