@@ -105,7 +105,75 @@ def verifyLogin():
         else:
             # User not found, login failed
             return render_template('LoginStudent.html',msg="Access Denied: Invalid Email or Ic Number")
+        
+@app.route("/displayJobFind", methods=['POST'])
+def displayAllJobs():
+    # Get all the jobs from the database
+    select_sql = "SELECT * FROM job"
+    cursor = db_conn.cursor()
 
+    try:
+        cursor.execute(select_sql)
+        jobs = cursor.fetchall()
+
+        if not jobs:
+            return "No jobs found"
+
+        # Get the company names from the database
+        select_company_sql = "SELECT name FROM company"
+        cursor.execute(select_company_sql)
+        company_names = cursor.fetchall()
+
+        # Get the industry names from the database
+        select_industry_sql = "SELECT name FROM industry"
+        cursor.execute(select_industry_sql)
+        industry_names = cursor.fetchall()
+
+        # Create a list of job objects
+        job_objects = []
+        for job in jobs:
+            job_id = job[0]
+            publish_date = job[1]
+            job_type = job[2]
+            job_position = job[3]
+            job_desc = job[4]
+            job_requirement = job[5]
+            job_location = job[6]
+            salary = job[7]
+            num_of_opening = job[8]
+            company_id = job[9]
+            industry_id = job[10]
+
+            # Get the company name
+            company_name = company_names[company_id - 1][0]
+
+            # Get the industry name
+            industry_name = industry_names[industry_id - 1][0]
+
+            job_object = {
+                "job_id": job_id,
+                "publish_date": publish_date,
+                "job_type": job_type,
+                "job_position": job_position,
+                "job_desc": job_desc,
+                "job_requirement": job_requirement,
+                "job_location": job_location,
+                "salary": salary,
+                "num_of_opening": num_of_opening,
+                "company_name": company_name,
+                "industry_name": industry_name
+            }
+
+            job_objects.append(job_object)
+
+        return render_template('SearchCompany.html', jobs=job_objects)
+
+    except Exception as e:
+        return str(e)
+
+    finally:
+        cursor.close()
+        db_conn.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)

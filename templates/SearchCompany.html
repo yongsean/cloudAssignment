@@ -189,7 +189,7 @@
     /*SearchCompany.html */
     .background-internship {
         width: 1500px;
-        height: 700px;
+        height: 400px;
     }
 
     .job-container {
@@ -222,9 +222,13 @@
         flex-wrap: wrap;
     }
 
-    h1,
-    h2,
-    h3 {
+    .internship-header {
+        font-weight: bold;
+        color: #444444;
+    }
+
+    .content-company-name,
+    .content-company-title {
         font-weight: bold;
     }
 
@@ -252,7 +256,8 @@
     .group-search-company,
     .group-search-title,
     .group-search-state,
-    .group-range-allowance {
+    .group-range-allowance,
+    .group-search-allowance {
         margin-bottom: 30px;
     }
 
@@ -293,6 +298,15 @@
     .div-line {
         display: flex;
     }
+
+    table.job-content {
+        BORDER-SPACING: 0.5EM;
+    }
+
+    table.job-content h1,
+    h2 {
+        font-weight: bold;
+    }
 </style>
 
 <head>
@@ -315,12 +329,6 @@
 </head>
 
 <body>
-    <div class="logoCol">
-        <div style="text-align:center">
-            <img alt="Finding Internship" src="{{ url_for('static', filename='images/backgroundInternship.jpg')}}"
-             class="background-internship">
-        </div>
-    </div>
     <h1 class="internship-header">Finding Internship</h1>
 
     <div class="overall">
@@ -355,61 +363,66 @@
                     </select>
                 </div>
 
-                <div class="group-range-allowance">
+                <div class="group-search-allowance">
                     <label class="label-search-allowance">Allowance Range</label>
-                    <input type="range" name="allowance" min="0" max="2000" step="100">
+                    <select class="allowance-list">
+                        <option value="300">RM0-RM300</option>
+                        <option value="600">Up To RM600</option>
+                        <option value="900">Up To RM900</option>
+                        <option value="1200">Up To RM1200</option>
+                        <option value="1500">Up To RM1500</option>
+                        <option value="1800">Up To RM1800</option>
+                    </select>
                 </div>
+
             </div>
             <div class="vl"></div>
 
         </div>
         <div class="job-container">
             <div class="job-listing">
+                {% for job in jobs %}
                 <div class="job-ad">
                     <div class="job-text-adjust">
-                        <h2>Company: BHL Computers</h2>
-                        <h3>Job Title: SALES JOB</h3>
-                        <p>Location: NO 2, JALAN UT, TAMAN UNIVERSITI TANJUNG MALIM, 35900, Perak</p>
-                        <p>Allowance: RM 300.00 - RM 300.00</p>
-                        <p>State: All State</p>
-                        <p>Allowance Range: RM300.00-RM1000.00</p>
-                        <p>Posted: 13 HOURS AGO</p>
-                        <button>VIEW</button>
-                    </div>
-                </div>
-                <div class="job-ad">
-                    <div class="job-text-adjust">
-                        <h2>Company: techies</h2>
-                        <h3>Job Title: eg Web Developer</h3>
-                        <p>Location: Tunku Abdul Rahman University College</p>
-                        <p>Allowance: RM 300.00 - RM 300.00</p>
-                        <p>State: Open For Diploma & Degree</p>
-                        <p>Allowance Range: RM300.00-RM1000.00</p>
-                        <p>Posted: 13 HOURS AGO</p>
-                        <button>VIEW</button>
-                    </div>
-                </div>
-                <div class="job-ad">
-                    <div class="job-text-adjust">
-                        <h2>Company: VVINNERS</h2>
-                        <h3>Job Title: Software Developer (Intern)</h3>
-                        <p>Location: Sunway Nexis Soho, D-5-7 No.1, Jalan PJU 5/1 Dataran Sunway, Kota Damansara, 47810
-                            Petaling
-                            Jaya, Selangor, 47810, Selangor</p>
-                        <p>Allowance: RM 600.00 - RM 800.00</p>
-                        <p>Open For Diploma & Degree</p>
-                        <p>Posted: 2 DAYS AGO</p>
-                        <button>VIEW</button>
-                    </div>
-                </div>
-                <div class="job-ad">
-                    <div class="job-text-adjust">
-                        <h2>Company: INTEGO</h2>
-                        <h3>Job Title: Internship for Web Developer</h3>
-                        <p>Location: INTEGO TECHNOLOGIES SDN BHD</p>
-                        <p>Open For Diploma & Degree</p>
-                        <p>Posted: 2 DAYS AGO</p>
-                        <button>VIEW</button>
+                        <table class="job-content">
+                            <tr>
+                                <th>
+                                    <h2>Company</h2>
+                                </th>
+                                <td>
+                                    <h2>{{ job_object.company_name }}</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h3>Job Title</h3>
+                                </th>
+                                <td>
+                                    <h3>{{ job_object.job_position }}</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td>{{ job_object.job_location }}</td>
+                            </tr>
+                            <tr>
+                                <th>Allowance</th>
+                                <td>{{ job_object.salary }}</td>
+                            </tr>
+                            <tr>
+                                <th>State</th>
+                                <td>{{ job_object.state }}</td>
+                            </tr>
+                            <tr>
+                                <th>Allowance Range</th>
+                                <td>{{ job_object.allowance_range }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button>VIEW</button></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
             </div>
