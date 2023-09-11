@@ -166,7 +166,8 @@ def displayAllJobs():
     finally:
         cursor.close()
         db_conn.close()
-        return render_template('SearchCompany.html', jobs=job_objects)
+        
+    return render_template('SearchCompany.html', jobs=job_objects)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
