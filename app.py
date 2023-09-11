@@ -108,8 +108,34 @@ def verifyLogin():
         
 @app.route("/displayJobFind", methods=['POST','GET'])
 def displayAllJobs():
-    # Get all the jobs from the database
-    select_sql = "SELECT * FROM job"
+    # Initialize an empty filter condition
+    filter_condition = "1 = 1"  # Default condition to select all jobs
+
+    # Get user inputs from the form
+    search_company = request.form.get("search-company")
+    search_title = request.form.get("search-title")
+    search_state = request.form.get("search-state")
+    search_allowance = request.form.get("search-allowance")
+
+    # Build the filter condition based on user inputs
+    if search_company:
+        filter_condition += f" AND company.name LIKE '%{search_company}%'"
+    if search_title:
+        filter_condition += f" AND job.job_position LIKE '%{search_title}%'"
+    if search_state != "All":
+        filter_condition += f" AND job.job_location = '{search_state}'"
+    if search_allowance != "All":
+        filter_condition += f" AND job.salary <= {int(search_allowance)}"
+
+    # Construct the SQL query with the filter condition
+    select_sql = f"""
+        SELECT job.*, company.name AS company_name, industry.name AS industry_name
+        FROM job
+        INNER JOIN company ON job.company_id = company.companyId
+        INNER JOIN industry ON job.industry_id = industry.industryId
+        WHERE {filter_condition}
+    """
+
     cursor = db_conn.cursor()
 
     try:
@@ -122,6 +148,7 @@ def displayAllJobs():
         # Create a list of job objects
         job_objects = []
         for job in jobs:
+            # Fetch job details
             job_id = job[0]
             publish_date = job[1]
             job_type = job[2]
@@ -131,18 +158,8 @@ def displayAllJobs():
             job_location = job[6]
             salary = job[7]
             num_of_opening = job[8]
-            company_id = job[9]
-            industry_id = job[10]
-
-            # Get the company name from the database
-            select_company_sql = "SELECT name FROM company WHERE companyId = %s"
-            cursor.execute(select_company_sql, (company_id,))
-            company_name = cursor.fetchone()[0]
-
-            # Get the industry name from the database
-            select_industry_sql = "SELECT name FROM industry WHERE industryId = %s"
-            cursor.execute(select_industry_sql, (industry_id,))
-            industry_name = cursor.fetchone()[0]
+            company_name = job[11]
+            industry_name = job[12]
 
             job_object = {
                 "job_id": job_id,
@@ -160,14 +177,15 @@ def displayAllJobs():
 
             job_objects.append(job_object)
 
+        return render_template('SearchCompany.html', jobs=job_objects)
+
     except Exception as e:
         return str(e)
 
     finally:
         cursor.close()
         db_conn.close()
-        
-    return render_template('SearchCompany.html', jobs=job_objects)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)

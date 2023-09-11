@@ -307,6 +307,18 @@
     h2 {
         font-weight: bold;
     }
+
+    .confirm-filter-company{
+        background-color: #000;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .confirm-filter-company {
+        background-color: #444;
+    }
 </style>
 
 <head>
@@ -346,7 +358,7 @@
 
                 <div class="group-search-state">
                     <label class="label-search-state">State</label>
-                    <select name="state">
+                    <select name="search-state">
                         <option value="All">All States</option>
                         <option value="Selangor">Selangor</option>
                         <option value="Kuala Lumpur">Kuala Lumpur</option>
@@ -365,7 +377,7 @@
 
                 <div class="group-search-allowance">
                     <label class="label-search-allowance">Allowance Range</label>
-                    <select class="allowance-list">
+                    <select class="search-allowance">
                         <option value="300">RM0-RM300</option>
                         <option value="600">Up To RM600</option>
                         <option value="900">Up To RM900</option>
@@ -375,6 +387,9 @@
                     </select>
                 </div>
 
+                <div class-group-button>
+                    <button type="submit" name="button-filter" class="confirm-filter-company">Filter</button>
+                </div>
             </div>
             <div class="vl"></div>
 
@@ -425,18 +440,6 @@
                     </div>
                 </div>
             {% endfor %}
-                <div class="job-ad">
-                    <div class="job-text-adjust">
-                        <h2>Company: techies</h2>
-                        <h3>Job Title: eg Web Developer</h3>
-                        <p>Location: Tunku Abdul Rahman University College</p>
-                        <p>Allowance: RM 300.00 - RM 300.00</p>
-                        <p>State: Open For Diploma & Degree</p>
-                        <p>Allowance Range: RM300.00-RM1000.00</p>
-                        <p>Posted: 13 HOURS AGO</p>
-                        <button>VIEW</button>
-                    </div>
-                </div>
                 
             </div>
         </div>
