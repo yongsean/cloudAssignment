@@ -119,16 +119,6 @@ def displayAllJobs():
         if not jobs:
             return "No jobs found"
 
-        # Get the company names from the database
-        select_company_sql = "SELECT name FROM company"
-        cursor.execute(select_company_sql)
-        company_names = cursor.fetchall()
-
-        # Get the industry names from the database
-        select_industry_sql = "SELECT name FROM industry"
-        cursor.execute(select_industry_sql)
-        industry_names = cursor.fetchall()
-
         # Create a list of job objects
         job_objects = []
         for job in jobs:
@@ -144,11 +134,15 @@ def displayAllJobs():
             company_id = job[9]
             industry_id = job[10]
 
-            # Get the company name
-            company_name = company_names[company_id - 1][0]
+            # Get the company name from the database
+            select_company_sql = "SELECT name FROM company WHERE companyId = %s"
+            cursor.execute(select_company_sql, (company_id,))
+            company_name = cursor.fetchone()[0]
 
-            # Get the industry name
-            industry_name = industry_names[industry_id - 1][0]
+            # Get the industry name from the database
+            select_industry_sql = "SELECT name FROM industry WHERE industryId = %s"
+            cursor.execute(select_industry_sql, (industry_id,))
+            industry_name = cursor.fetchone()[0]
 
             job_object = {
                 "job_id": job_id,
