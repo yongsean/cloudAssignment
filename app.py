@@ -106,10 +106,31 @@ def verifyLogin():
             # User not found, login failed
             return render_template('LoginStudent.html',msg="Access Denied: Invalid Email or Ic Number")
         
-@app.route("/displayJobFind", methods=['POST','GET'])
+@app.route("/displayJobFind", methods=['POST', 'GET'])
 def displayAllJobs():
-    # Get all the jobs from the database
-    select_sql = "SELECT * FROM job"
+    # Get filter values from the form
+    search_company = request.form.get('search-company', '')
+    search_title = request.form.get('search-title', '')
+    search_state = request.form.get('search-state', 'All')
+    search_allowance = request.form.get('search-allowance', '300')
+
+    # Construct the base SQL query
+    select_sql = "SELECT * FROM job WHERE 1"
+
+    # Add filter conditions based on form inputs
+    if search_company:
+        select_sql += f" AND company_name LIKE '%{search_company}%'"
+
+    if search_title:
+        select_sql += f" AND job_position LIKE '%{search_title}%'"
+
+    if search_state != 'All':
+        select_sql += f" AND job_location = '{search_state}'"
+
+    # Parse the allowance range
+    min_allowance, max_allowance = map(int, search_allowance.split('-'))
+    select_sql += f" AND salary >= {min_allowance} AND salary <= {max_allowance}"
+
     cursor = db_conn.cursor()
 
     try:
@@ -166,8 +187,9 @@ def displayAllJobs():
     finally:
         cursor.close()
         db_conn.close()
-        
+
     return render_template('SearchCompany.html', jobs=job_objects)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
