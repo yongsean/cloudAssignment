@@ -160,7 +160,7 @@ def displayAllJobs():
 
             job_objects.append(job_object)
 
-        return render_template('SearchCompany.html', jobs=job_objects)
+        return job_objects
 
     except Exception as e:
         return str(e)
