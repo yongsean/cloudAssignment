@@ -135,13 +135,13 @@ def displayAllJobs():
 
     # Add filter conditions based on form inputs
     if search_company:
-        select_sql += f" AND company_name LIKE '%{search_company}%'"
+        select_sql += f" AND name LIKE '%{search_company}%'"
 
     if search_title:
-        select_sql += f" AND job_position LIKE '%{search_title}%'"
+        select_sql += f" AND jobPosition LIKE '%{search_title}%'"
 
     if search_state != 'All':
-        select_sql += f" AND job_location = '{search_state}'"
+        select_sql += f" AND jobLocation = '{search_state}'"
 
     if search_allowance:
             select_sql += f" AND salary <= {search_allowance}"
