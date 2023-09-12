@@ -234,7 +234,7 @@ def displayAllJobs():
                     job_requirement = job[5]
                     job_location = job[6]
                     salary = job[7]
-                    company_id=job[10]
+                    company_id=job[9]
                     company_name = job[11]  # Extracted from the JOINed column
 
                     # Fectch the S3 image URL based on company id
