@@ -10,7 +10,7 @@
 
 	<nav>
 		<div class="homeNav">
-			<a href="#">Home</a>
+			<a href="/">Home</a>
 		</div>
 		<div class="otherNav">
 			<div class="dropdown">
@@ -21,85 +21,121 @@
 				</div>
 			</div>
 			<a href="#">Uni Supervisor</a>
-			<a href="#">Admin</a>
+			<a href="/login_admin">Admin</a>
 			<a href="#">Student</a>
 		</div>
-
 	</nav>
 </head>
 
 <body>
 
-	<form action="/addemp" autocomplete="on" method="POST" enctype="multipart/form-data">
-
-		<!-- <button type="submit" formaction="/getemp" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br> -->
-		<div>
-			<div class="tab">
-				<legend>Register Company</legend>
-			</div>
-			<div>
-				<table>
-					<tr>
-						<td>
-							<label class="label">Name:</label>
-						</td>
-						<td>
-							<input class="inputText" type="text" name="emp_id" autofocus size="40">
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<label class="label">Company Logo:</label>
-						</td>
-						<td>
-							<input class="uploadCompLogo" type=file name="emp_image_file">
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<label class="label">About Company:</label>
-						</td>
-						<td>
-							<input class="inputText" type="text" name="last_name">
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<label class="label">Phone Number (+60):</label>
-						</td>
-						<td>
-							<input class="inputText" name="pri_skill">
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<label class="label">Email:</label>
-						</td>
-						<td>
-							<input class="inputText" type="text" name="location">
-						</td>
-					</tr>
-
-					<tr>
-						<td>
-							<label class="label">Address:</label>
-						</td>
-						<td>
-							<input class="inputText" type="text" name="first_name">
-						</td>
-					</tr>
-				</table>
-			</div>
+	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
+		<div class="h1">
+			<h1>
+				Register Company
+			</h1>
 		</div>
 
-		<button class="submitBtn" type="submit">Register</button>
+		<fieldset>
+			<div class="container">
+				<div class="title">
+					<legend>Company Information</legend>
+				</div>
+				<div>
+					<table>
+						<tr>
+							<td>
+								<label class="label">Name</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="company_name" autofocus size="40"
+									placeholder="Enter company name"></textarea>
+							</td>
+						</tr>
 
+						<tr>
+							<td>
+								<label class="label">Company Logo</label>
+							</td>
+							<td>
+								<input class="uploadCompLogo" type=file name="company_image_file">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">About Company</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="about_company"
+									placeholder="Enter information about the company"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Phone Number (+60)</label>
+							</td>
+							<td>
+								<input class="inputText" name="company_phone"
+									placeholder="Enter phone number of the company">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Email</label>
+							</td>
+							<td>
+								<input class="inputText" type="text" name="company_email"
+									placeholder="Enter email of the company">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Address</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="company_address"
+									placeholder="Enter address of the company"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Password</label>
+							</td>
+							<td>
+								<input class="inputText" type="password" name="password" placeholder="Enter password">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Confirm Password</label>
+							</td>
+							<td>
+								<input class="inputText" type="password" name="confirm_password"
+									placeholder="Enter confirm password">
+							</td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td>
+								<button class="submitBtn" type="submit">Register</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+		</fieldset>
 	</form>
-	<!-- <a href="/about">About Us</a> -->
+
+	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
 </body>
 
 
