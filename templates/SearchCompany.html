@@ -308,7 +308,7 @@
         font-weight: bold;
     }
 
-    .confirm-filter-company{
+    .confirm-filter-company {
         background-color: #000;
         color: #fff;
         padding: 10px 20px;
@@ -343,106 +343,109 @@
 <body>
     <h1 class="internship-header">Finding Internship</h1>
 
-    <div class="overall">
-        <div class="div-line">
-            <div class="job-search-filter">
-                <div class="group-search-company">
-                    <label class="label-search-company">Company</label>
-                    <input type="text" name="search-company" placeholder="eg. Tunku Abdul Rahman University College">
-                </div>
+    <form action="/displayJobFind" autocomplete="on" method="post">
+        <div class="overall">
+            <div class="div-line">
+                <div class="job-search-filter">
+                    <div class="group-search-company">
+                        <label class="label-search-company">Company</label>
+                        <input type="text" name="search-company"
+                            placeholder="eg. Tunku Abdul Rahman University College">
+                    </div>
 
-                <div class="group-search-title">
-                    <label class="label-search-title">Job Title</label>
-                    <input type="text" name="search-title" placeholder="eg. Web Developer">
-                </div>
+                    <div class="group-search-title">
+                        <label class="label-search-title">Job Title</label>
+                        <input type="text" name="search-title" placeholder="eg. Web Developer">
+                    </div>
 
-                <div class="group-search-state">
-                    <label class="label-search-state">State</label>
-                    <select name="search-state">
-                        <option value="All">All States</option>
-                        <option value="Selangor">Selangor</option>
-                        <option value="Kuala Lumpur">Kuala Lumpur</option>
-                        <option value="Penang">Penang</option>
-                        <option value="Johor">Johor</option>
-                        <option value="Melaka">Melaka</option>
-                        <option value="Negeri Sembilan">Negeri Sembilan</option>
-                        <option value="Pahang">Pahang</option>
-                        <option value="Terengganu">Terengganu</option>
-                        <option value="Kelantan">Kelantan</option>
-                        <option value="Perak">Perak</option>
-                        <option value="Sabah">Sabah</option>
-                        <option value="Sarawak">Sarawak</option>
-                    </select>
-                </div>
+                    <div class="group-search-state">
+                        <label class="label-search-state">State</label>
+                        <select name="search-state">
+                            <option value="All">All States</option>
+                            <option value="Selangor">Selangor</option>
+                            <option value="Kuala Lumpur">Kuala Lumpur</option>
+                            <option value="Penang">Penang</option>
+                            <option value="Johor">Johor</option>
+                            <option value="Melaka">Melaka</option>
+                            <option value="Negeri Sembilan">Negeri Sembilan</option>
+                            <option value="Pahang">Pahang</option>
+                            <option value="Terengganu">Terengganu</option>
+                            <option value="Kelantan">Kelantan</option>
+                            <option value="Perak">Perak</option>
+                            <option value="Sabah">Sabah</option>
+                            <option value="Sarawak">Sarawak</option>
+                        </select>
+                    </div>
 
-                <div class="group-search-allowance">
-    <label class="label-search-allowance">Allowance Range</label>
-    <select name="search-allowance">
-        <option value="0-300">RM0-RM300</option>
-        <option value="0-600">Up To RM600</option>
-        <option value="0-900">Up To RM900</option>
-        <option value="0-1200">Up To RM1200</option>
-        <option value="0-1500">Up To RM1500</option>
-        <option value="0-1800">Up To RM1800</option>
-    </select>
-</div>
-                <div class-group-button>
-                    <button type="submit" name="button-filter" class="confirm-filter-company">Filter</button>
-                </div>
-            </div>
-            <div class="vl"></div>
-
-        </div>
-        <div class="job-container">
-            <div class="job-listing">
-            {% for job in jobs %}
-                <div class="job-ad">
-                    <div class="job-text-adjust">
-                        <table class="job-content">
-                            <tr>
-                                <th>
-                                    <h2>Company</h2>
-                                </th>
-                                <td>
-                                    <h2>{{ job.company_name }}</h2>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <h3>Job Title</h3>
-                                </th>
-                                <td>
-                                    <h3>{{ job.job_position }}</h3>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Location</th>
-                                <td>{{ job.job_location }}</td>
-                            </tr>
-                            <tr>
-                                <th>Allowance</th>
-                                <td>RM{{ job.salary }}</td>
-                            </tr>
-                            <tr>
-                                <th>Open For</th>
-                                <td>{{ job.job_requirement }}</td>
-                            </tr>
-                            <tr>
-                                <th>Publish Date</th>
-                                <td>{{ job.publish_date.strftime('%Y-%m-%d') }}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><button>VIEW</button></td>
-                            </tr>
-                        </table>
+                    <div class="group-search-allowance">
+                        <label class="label-search-allowance">Allowance Range</label>
+                        <select name="search-allowance">
+                            <option value="0-300">RM0-RM300</option>
+                            <option value="0-600">Up To RM600</option>
+                            <option value="0-900">Up To RM900</option>
+                            <option value="0-1200">Up To RM1200</option>
+                            <option value="0-1500">Up To RM1500</option>
+                            <option value="0-1800">Up To RM1800</option>
+                        </select>
+                    </div>
+                    <div class-group-button>
+                        <button type="submit" name="button-filter" class="confirm-filter-company">Filter</button>
                     </div>
                 </div>
-            {% endfor %}
-                
+                <div class="vl"></div>
+
+            </div>
+            <div class="job-container">
+                <div class="job-listing">
+                    {% for job in jobs %}
+                    <div class="job-ad">
+                        <div class="job-text-adjust">
+                            <table class="job-content">
+                                <tr>
+                                    <th>
+                                        <h2>Company</h2>
+                                    </th>
+                                    <td>
+                                        <h2>{{ job.company_name }}</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h3>Job Title</h3>
+                                    </th>
+                                    <td>
+                                        <h3>{{ job.job_position }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td>{{ job.job_location }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Allowance</th>
+                                    <td>RM{{ job.salary }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Open For</th>
+                                    <td>{{ job.job_requirement }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Publish Date</th>
+                                    <td>{{ job.publish_date.strftime('%Y-%m-%d') }}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><button>VIEW</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 
 </html>
