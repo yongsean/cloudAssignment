@@ -141,7 +141,7 @@ def displayAllJobs():
         select_sql += f" AND jobPosition LIKE '%{search_title}%'"
 
     if search_state != 'All':
-        select_sql += f" AND jobLocation = '{search_state}'"
+        select_sql += f" AND jobLocation LIKE= '%{search_state}%'"
 
     if search_allowance:
             select_sql += f" AND salary <= {search_allowance}"
