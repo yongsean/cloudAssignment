@@ -182,6 +182,8 @@ def displayAllJobs():
 
             job_objects.append(job_object)
 
+        return render_template('SearchCompany.html', jobs=job_objects)
+
     except Exception as e:
         return str(e)
 
@@ -189,8 +191,7 @@ def displayAllJobs():
         cursor.close()
         db_conn.close()
 
-    return render_template('SearchCompany.html', jobs=job_objects)
-
+        return render_template('SearchCompany.html', jobs=job_objects)
 
 
 if __name__ == '__main__':
