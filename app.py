@@ -130,28 +130,32 @@ def displayAllJobs():
     search_state = request.form.get('search-state', 'All')
     search_allowance = request.form.get('search-allowance', '1800')
 
-    # Construct the base SQL query
-    select_sql = "SELECT * FROM job WHERE 1"
+    # Construct the base SQL query with a JOIN between the job and company tables
+    select_sql = """
+        SELECT j.*, c.name AS company_name
+        FROM job j
+        LEFT JOIN company c ON j.company = c.companyId
+        WHERE 1
+    """
 
     # Add filter conditions based on form inputs
     if search_company:
-        select_sql += f" AND name LIKE '%{search_company}%'"
+        select_sql += f" AND c.name LIKE '%{search_company}%'"
 
     if search_title:
-        select_sql += f" AND jobPosition LIKE '%{search_title}%'"
+        select_sql += f" AND j.jobPosition LIKE '%{search_title}%'"
 
     if search_state != 'All':
-        select_sql += f" AND jobLocation LIKE '%{search_state}%'"
+        select_sql += f" AND j.jobLocation LIKE '%{search_state}%'"
 
     if search_allowance:
-            select_sql += f" AND salary <= {search_allowance}"
+        select_sql += f" AND j.salary <= {search_allowance}"
 
     try:
         with get_db_connection() as db_conn:
             with db_conn.cursor() as cursor:
                 cursor.execute(select_sql)
                 jobs = cursor.fetchall()
-
 
                 job_objects = []
                 for job in jobs:
@@ -164,20 +168,7 @@ def displayAllJobs():
                     job_location = job[6]
                     salary = job[7]
                     num_of_opening = job[8]
-                    company_id = job[9]
-                    industry_id = job[10]
-
-                    # Get the company name from the database
-                    select_company_sql = "SELECT name FROM company WHERE companyId = %s"
-                    cursor.execute(select_company_sql, (company_id,))
-                    company_result = cursor.fetchone()
-                    company_name = company_result[0] if company_result else ''
-
-                    # Get the industry name from the database
-                    select_industry_sql = "SELECT name FROM industry WHERE industryId = %s"
-                    cursor.execute(select_industry_sql, (industry_id,))
-                    industry_result = cursor.fetchone()
-                    industry_name = industry_result[0] if industry_result else ''
+                    company_name = job[11]  # Extracted from the JOINed column
 
                     job_object = {
                         "job_id": job_id,
@@ -190,7 +181,6 @@ def displayAllJobs():
                         "salary": salary,
                         "num_of_opening": num_of_opening,
                         "company_name": company_name,
-                        "industry_name": industry_name
                     }
 
                     job_objects.append(job_object)
@@ -199,6 +189,7 @@ def displayAllJobs():
 
     except Exception as e:
         return str(e)
+
 
 
 if __name__ == '__main__':
