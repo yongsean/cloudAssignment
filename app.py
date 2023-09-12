@@ -147,60 +147,61 @@ def displayAllJobs():
             select_sql += f" AND salary <= {search_allowance}"
 
     try:
-        with get_db_connection() as db_conn, db_conn.cursor() as cursor:
-            cursor.execute(select_sql)
-            jobs = cursor.fetchall()
+        with get_db_connection() as db_conn:
+            with db_conn.cursor() as cursor:
+                cursor.execute(select_sql)
+                jobs = cursor.fetchall()
 
-            if not jobs:
-                return "No jobs found"
+                if not jobs:
+                    return "No jobs found"
 
-        # Create a list of job objects
-        job_objects = []
-        for job in jobs:
-            job_id = job[0]
-            publish_date = job[1]
-            job_type = job[2]
-            job_position = job[3]
-            job_desc = job[4]
-            job_requirement = job[5]
-            job_location = job[6]
-            salary = job[7]
-            num_of_opening = job[8]
-            company_id = job[9]
-            industry_id = job[10]
+                job_objects = []
+                for job in jobs:
+                    job_id = job[0]
+                    publish_date = job[1]
+                    job_type = job[2]
+                    job_position = job[3]
+                    job_desc = job[4]
+                    job_requirement = job[5]
+                    job_location = job[6]
+                    salary = job[7]
+                    num_of_opening = job[8]
+                    company_id = job[9]
+                    industry_id = job[10]
 
-            # Get the company name from the database
-            select_company_sql = "SELECT name FROM company WHERE companyId = %s"
-            cursor.execute(select_company_sql, (company_id,))
-            company_result = cursor.fetchone()
-            company_name = company_result[0] if company_result else ''
+                    # Get the company name from the database
+                    select_company_sql = "SELECT name FROM company WHERE companyId = %s"
+                    cursor.execute(select_company_sql, (company_id,))
+                    company_result = cursor.fetchone()
+                    company_name = company_result[0] if company_result else ''
 
-            # Get the industry name from the database
-            select_industry_sql = "SELECT name FROM industry WHERE industryId = %s"
-            cursor.execute(select_industry_sql, (industry_id,))
-            industry_result = cursor.fetchone()
-            industry_name = industry_result[0] if industry_result else ''
+                    # Get the industry name from the database
+                    select_industry_sql = "SELECT name FROM industry WHERE industryId = %s"
+                    cursor.execute(select_industry_sql, (industry_id,))
+                    industry_result = cursor.fetchone()
+                    industry_name = industry_result[0] if industry_result else ''
 
-            job_object = {
-                "job_id": job_id,
-                "publish_date": publish_date,
-                "job_type": job_type,
-                "job_position": job_position,
-                "job_desc": job_desc,
-                "job_requirement": job_requirement,
-                "job_location": job_location,
-                "salary": salary,
-                "num_of_opening": num_of_opening,
-                "company_name": company_name,
-                "industry_name": industry_name
-            }
+                    job_object = {
+                        "job_id": job_id,
+                        "publish_date": publish_date,
+                        "job_type": job_type,
+                        "job_position": job_position,
+                        "job_desc": job_desc,
+                        "job_requirement": job_requirement,
+                        "job_location": job_location,
+                        "salary": salary,
+                        "num_of_opening": num_of_opening,
+                        "company_name": company_name,
+                        "industry_name": industry_name
+                    }
 
-            job_objects.append(job_object)
+                    job_objects.append(job_object)
 
         return render_template('SearchCompany.html', jobs=job_objects)
 
     except Exception as e:
         return str(e)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
