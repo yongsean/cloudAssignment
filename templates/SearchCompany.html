@@ -343,9 +343,9 @@
 <body>
     <h1 class="internship-header">Finding Internship</h1>
 
-    <form action="/displayJobFind" autocomplete="on" method="post">
-        <div class="overall">
-            <div class="div-line">
+    <div class="overall">
+        <div class="div-line">
+            <form action="/displayJobFind" autocomplete="on" method="post">
                 <div class="job-search-filter">
                     <div class="group-search-company">
                         <label class="label-search-company">Company</label>
@@ -393,63 +393,62 @@
                     </div>
                 </div>
                 <div class="vl"></div>
-
-            </div>
-            <div class="job-container">
-                <div class="job-listing">
-                    {% for job in jobs %}
-                    <div class="job-ad">
-                        <div class="job-text-adjust">
-                            <table class="job-content">
-                                <tr>
-                                    <th>
-                                        <h2>Company</h2>
-                                    </th>
-                                    <td>
-                                        <h2>{{ job.company_name }}</h2>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <h3>Job Title</h3>
-                                    </th>
-                                    <td>
-                                        <h3>{{ job.job_position }}</h3>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Location</th>
-                                    <td>{{ job.job_location }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Allowance</th>
-                                    <td>RM{{ job.job_type }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Job Type</th>
-                                    <td>RM{{ job.salary }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Open For</th>
-                                    <td>{{ job.job_requirement }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Publish Date</th>
-                                    <td>{{ job.publish_date.strftime('%Y-%m-%d') }}</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><button>VIEW</button></td>
-                                </tr>
-                            </table>
-                        </div>
+            </form>
+        </div>
+        <div class="job-container">
+            <div class="job-listing">
+                {% for job in jobs %}
+                <div class="job-ad">
+                    <div class="job-text-adjust">
+                        <table class="job-content">
+                            <tr>
+                                <th>
+                                    <h2>Company</h2>
+                                </th>
+                                <td>
+                                    <h2>{{ job.company_name }}</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h3>Job Title</h3>
+                                </th>
+                                <td>
+                                    <h3>{{ job.job_position }}</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td>{{ job.job_location }}</td>
+                            </tr>
+                            <tr>
+                                <th>Allowance</th>
+                                <td>RM{{ job.salary }}</td>
+                            </tr>
+                            <tr>
+                                <th>Job Type</th>
+                                <td>RM{{ job.job_type }}</td>
+                            </tr>
+                            <tr>
+                                <th>Open For</th>
+                                <td>{{ job.job_requirement }}</td>
+                            </tr>
+                            <tr>
+                                <th>Publish Date</th>
+                                <td>{{ job.publish_date.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button>VIEW</button></td>
+                            </tr>
+                        </table>
                     </div>
-                    {% endfor %}
-
                 </div>
+                {% endfor %}
+
             </div>
         </div>
-    </form>
+    </div>
 </body>
 
 </html>
