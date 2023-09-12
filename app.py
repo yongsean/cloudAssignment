@@ -255,6 +255,7 @@ def displayAllJobs():
                         "job_location": job_location,
                         "salary": salary,
                         "company_name": company_name,
+                        "company_id": company_id,
                         "image_url": response
                     }
 
