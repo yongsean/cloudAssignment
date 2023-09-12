@@ -151,6 +151,9 @@ def displayAllJobs():
     if search_allowance:
         select_sql += f" AND j.salary <= {search_allowance}"
 
+    # Add the condition to check the company's status
+    select_sql += " AND c.status = 'activated'"
+
     try:
         with get_db_connection() as db_conn:
             with db_conn.cursor() as cursor:
