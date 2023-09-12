@@ -152,8 +152,6 @@ def displayAllJobs():
                 cursor.execute(select_sql)
                 jobs = cursor.fetchall()
 
-                if not jobs:
-                    return "No jobs found"
 
                 job_objects = []
                 for job in jobs:
