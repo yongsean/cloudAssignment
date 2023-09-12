@@ -236,19 +236,28 @@ def displayAllJobs():
                     job_location = job[6]
                     salary = job[7]
                     num_of_opening = job[8]
+                    company_id=job[10]
                     company_name = job[11]  # Extracted from the JOINed column
 
+                    # Fectch the S3 image URL based on company id
+                    company_image_file_name_in_s3  = "lec-id-" + str(company_id) + "_image_file"
+                    s3 = boto3.client('s3')
+                    bucket_name = custombucket
+
+                    response = s3.generate_presigned_url('get_object',
+                                                 Params={'Bucket': bucket_name,
+                                                         'Key': company_image_file_name_in_s3},
+                                                 ExpiresIn=1000)  # Adjust the expiration time as needed
                     job_object = {
                         "job_id": job_id,
                         "publish_date": publish_date,
                         "job_type": job_type,
                         "job_position": job_position,
-                        "job_desc": job_desc,
                         "job_requirement": job_requirement,
                         "job_location": job_location,
                         "salary": salary,
-                        "num_of_opening": num_of_opening,
                         "company_name": company_name,
+                        "image_url": response
                     }
 
                     job_objects.append(job_object)
