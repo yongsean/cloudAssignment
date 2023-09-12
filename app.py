@@ -231,16 +231,14 @@ def displayAllJobs():
                     publish_date = job[1]
                     job_type = job[2]
                     job_position = job[3]
-                    job_desc = job[4]
                     job_requirement = job[5]
                     job_location = job[6]
                     salary = job[7]
-                    num_of_opening = job[8]
                     company_id=job[10]
                     company_name = job[11]  # Extracted from the JOINed column
 
                     # Fectch the S3 image URL based on company id
-                    company_image_file_name_in_s3  = "lec-id-" + str(company_id) + "_image_file"
+                    company_image_file_name_in_s3  = "company-id-" + str(company_id) + "_image_file"
                     s3 = boto3.client('s3')
                     bucket_name = custombucket
 
