@@ -237,15 +237,16 @@ def displayAllJobs():
                     company_id=job[9]
                     company_name = job[11]  # Extracted from the JOINed column
 
-                    # Fectch the S3 image URL based on company id
-                    company_image_file_name_in_s3  = "company-id-" + str(company_id) + "_image_file"
-                    s3 = boto3.client('s3')
+                     # Generate the S3 image URL using custombucket and customregion
+                    company_image_file_name_in_s3 = f"company-id-{company_id}_image_file"
+                    s3 = boto3.client('s3', region_name=customregion)
                     bucket_name = custombucket
 
-                    response = s3.generate_presigned_url('get_object',
-                                                 Params={'Bucket': bucket_name,
-                                                         'Key': company_image_file_name_in_s3},
-                                                 ExpiresIn=1000)  # Adjust the expiration time as needed
+                    response = s3.generate_presigned_url(
+                        'get_object',
+                        Params={'Bucket': bucket_name, 'Key': company_image_file_name_in_s3},
+                        ExpiresIn=1000  # Adjust the expiration time as needed
+                    )
                     job_object = {
                         "job_id": job_id,
                         "publish_date": publish_date,
@@ -264,7 +265,9 @@ def displayAllJobs():
         return render_template('SearchCompany.html', jobs=job_objects)
 
     except Exception as e:
-        return str(e)
+        # Log the exception for debugging
+        print(f"Error: {str(e)}")
+        return "An error occurred while fetching job data."
 
 
 
