@@ -297,7 +297,7 @@
 
             <div class="content-job-requirement">
                 <h2>Job Requirement</h2>
-                <p>{{jobs[0].job_requirement}}</p>
+                <p>{{jobs[0].job_requirement.replace(/-/g, '<br>')}}</p>
             </div>
         </div>
 
@@ -319,7 +319,7 @@
                 </tr>
                 <tr>
                     <th>Allowance</th>
-                    <td>RM{{jobs[0].salary}}</td>
+                    <td>RM{{ '%.2f'|format(jobs[0].salary) }}</td>
                 </tr>
                 <tr>
                     <th>Number of operating</th>
