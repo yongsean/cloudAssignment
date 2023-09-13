@@ -288,14 +288,8 @@ def display_job_details():
         WHERE jobId =%s
         """
         cursor = db_conn.cursor()
-        try:
-            cursor.execute(select_sql, (selected_job_id,))
-            job = cursor.fetchone()
-
-            if not job:
-                return "No such job exists."
-        except Exception as e:
-            return str(e)
+        cursor.execute(select_sql, (selected_job_id,))
+        job = cursor.fetchone()
 
         # Initialize job_objects as an empty list
         job_objects = []
