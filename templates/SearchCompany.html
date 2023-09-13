@@ -406,15 +406,15 @@
         </div>
         <div class="job-container">
 
-            <form action="/displayJobDetails" autocomplete="on" name="job" method="POST">
-                <div class="job-listing">
-                    {% for job in jobs %}
+            <div class="job-listing">
+                {% for job in jobs %}
+                <form action="/displayJobDetails" autocomplete="on" name="job" method="POST">
                     <div class="job-ad">
                         <div class="job-text-adjust">
                             <img src="{{job.image_url }}"
                                 style="width: 300px; height: 200px; position: relative; left:75px;">
                             <table class="job-content">
-                                <input type="text" name="transfer-id" value="{{ job.job_id }}">
+                                <input type="hidden" name="transfer-id" value="{{ job.job_id }}">
                                 <tr>
                                     <td colspan="2">
                                         <h2>{{ job.company_name }}</h2>
@@ -453,9 +453,8 @@
                         </div>
                     </div>
                     {% endfor %}
-
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
