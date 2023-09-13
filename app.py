@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, session
 from pymysql import connections
 import os
 import boto3
@@ -150,7 +150,7 @@ def addCompanyRegistration():
         return render_template('home.html')
     
 
-@app.route("/verifyLogin", methods=['POST','GET'])
+@app.route("/verifyLogin", methods=['POST', 'GET'])
 def verifyLogin():
     if request.method == 'POST':
         StudentIc = request.form['StudentIc']
@@ -166,10 +166,11 @@ def verifyLogin():
         if user:
             # User found in the database, login successful
             # Redirect to the student home page
-            return render_template('StudentHomePage.html')
+            session['loggedInStudent'] = user[0]
+            return render_template('studentHome.html', studentId=user[0], studentName=user[1], IC=user[2], mobileNumber=user[3], gender=user[4], address=user[5], email=user[6], level=user[7], programme=user[8], supervisor=user[9], cohort=user[10])
         else:
             # User not found, login failed
-            return render_template('LoginStudent.html',msg="Access Denied: Invalid Email or Ic Number")
+            return render_template('LoginStudent.html', msg="Access Denied: Invalid Email or Ic Number")
     
 
 # Function to create a database connection context
@@ -271,9 +272,16 @@ def displayAllJobs():
         print(f"Error: {str(e)}")
         return "An error occurred while fetching job data."
 
-@app.route('/displayJobDetails')
+@app.route('/displayJobDetails', methods=['POST', 'GET'])
 def displayJobDetails():
-    return render_template('JobDetail.html')
+  """Gets the job data from the session and renders the JobDetail.html template."""
+  if request.method == 'POST':
+    job_data = request.form['job']
+    session['job'] = job_data
+  else:
+    job_data = session.get('job')
+
+  return render_template('JobDetail.html', job_data=job_data)
 
 
 if __name__ == '__main__':
