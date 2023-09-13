@@ -306,7 +306,7 @@ def display_job_details():
         job_type = job[2]
         job_position = job[3]
         qualification_level = job[4]
-        job_description = job[5]
+        job_description=job[5]
         job_requirement = job[6]
         job_location = job[7]
         salary = job[8]
