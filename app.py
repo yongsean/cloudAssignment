@@ -288,7 +288,7 @@ def display_job_details():
         cursor = db_conn.cursor()
         try:
             cursor.execute(select_sql,(selected_job_id))
-            jobs=cursor.fechone()
+            jobs=cursor.fetchone()
 
             if not job:
                     return "No such job exist."
