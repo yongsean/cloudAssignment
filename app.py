@@ -325,7 +325,6 @@ def display_job_details():
             Params={'Bucket': bucket_name, 'Key': company_image_file_name_in_s3},
             ExpiresIn=1000  # Adjust the expiration time as needed
         )
-        response=job[14]
 
         job_object = {
             "job_id": job_id,
