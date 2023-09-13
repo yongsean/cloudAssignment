@@ -307,28 +307,27 @@
             <table class="job-details-table">
                 <tr>
                     <th>Job Title</th>
-                    <td>Web Developer</td>
+                    <td>{{jobs[0].job_position}}</td>
                 </tr>
                 <tr>
                     <th>Job Type</th>
-                    <td>Internship</td>
+                    <td>{{jobs[0].job_type}}</td>
                 </tr>
                 <tr>
                     <th>Working Address</th>
-                    <td>Sunway Nexis Soho, D-5-7 No.1, Jalan PJU 5/1 Dataran Sunway, Kota Damansara, 47810 Petaling
-                        Jaya, Selangor, 47810, Selangor</td>
+                    <td>{{jobs[0].job_location}}</td>
                 </tr>
                 <tr>
                     <th>Allowance</th>
-                    <td>RM800</td>
+                    <td>RM{{jobs[0].salary}}</td>
                 </tr>
                 <tr>
                     <th>Number of operating</th>
-                    <td>3 Person</td>
+                    <td>{{jobs[0].num_of_operate}} Person</td>
                 </tr>
                 <tr>
                     <th>Industry Type</th>
-                    <td>Information Technology</td>
+                    <td>{{jobs[0].industry_name}}</td>
                 </tr>
                 <tr>
                     <th>Person In Charge</th>
