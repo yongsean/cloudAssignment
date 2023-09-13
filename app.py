@@ -278,6 +278,7 @@ def display_job_details():
     # Get the selected job_id from the form
     selected_job_id = request.form['transfer-id']
     print("Selected Job ID:", selected_job_id)
+    return selected_job_id
             
 
 if __name__ == '__main__':
