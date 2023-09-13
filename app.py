@@ -236,7 +236,7 @@ def displayAllJobs():
                     job_location = job[7]
                     salary = job[8]
                     company_id=job[10]
-                    company_name = job[11]  # Extracted from the JOINed column
+                    company_name = job[12]  # Extracted from the JOINed column
 
                      # Generate the S3 image URL using custombucket and customregion
                     company_image_file_name_in_s3 = "comp-id-"+str(company_id)+"_image_file"
