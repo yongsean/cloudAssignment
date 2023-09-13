@@ -271,6 +271,12 @@ def displayAllJobs():
         # Log the exception for debugging
         print(f"Error: {str(e)}")
         return "An error occurred while fetching job data."
+    
+@app.route("/displayJobDetails", methods=['POST'])
+def displayJobDetails():
+        # Render the JobDetails.html template with the job_details
+    return render_template('JobDetails.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
