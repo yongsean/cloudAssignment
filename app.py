@@ -306,6 +306,7 @@ def display_job_details():
         job_type = job[2]
         job_position = job[3]
         qualification_level = job[4]
+        job_description = job[5]
         job_requirement = job[6]
         job_location = job[7]
         salary = job[8]
@@ -324,6 +325,7 @@ def display_job_details():
             Params={'Bucket': bucket_name, 'Key': company_image_file_name_in_s3},
             ExpiresIn=1000  # Adjust the expiration time as needed
         )
+        response=job[14]
 
         job_object = {
             "job_id": job_id,
@@ -331,6 +333,7 @@ def display_job_details():
             "job_type": job_type,
             "job_position": job_position,
             "qualification_level": qualification_level,
+            "job_description":job_description,
             "job_requirement": job_requirement,
             "job_location": job_location,
             "salary": salary,

@@ -281,10 +281,9 @@
     <div class="job-header">
         <div class="company-about-content">
             <img src="{{ jobs[0].image_url }}" style="width: 250px; height: 150px; position: relative;">
-            <p>Job Id: {{jobs[0].job_id}}</p>
         </div>
         <div class="company-about-content">
-            <h1>VeecoTech Solutions Sdn. Bhd</h1>
+            <h1>{{ jobs[0].company_name}}</h1>
         </div>
     </div>
     <hr>
@@ -293,25 +292,12 @@
         <div class="left-side-details">
             <div class="content-about-us">
                 <h2>Job Summary</h2>
-                <p>We are seeking a creative and talented Video Intern to join our team.
-                    As a Video Intern, you will have the opportunity to gain hands-on experience in video production,
-                    editing, and storytelling for NOODOU, our Mandarin Platform.
-                    You will work closely with our marketing and creative teams to create
-                    engaging and compelling videos that effectively communicate our brand's message and capture the
-                    attention of our target audience.</p>
+                <p>{{jobs[0].job_description}}</p>
             </div>
 
             <div class="content-job-requirement">
                 <h2>Job Requirement</h2>
-                <p>
-                    -Minimum 3 months of Internship period and maximum is 6 months period<br>
-                    -Currently pursuing a Bachelor's Degree, Post Graduate Diploma and/or Professional Degree<br>
-                    (Multimedia , Communication, Marketing / Business or equivalent).<br>
-                    -Good in communication and writing skills<br>
-                    -Able to speak, read, and write in English & Malay.<br>
-                    -Monthly allowance is RM700.00 per month<br>
-                    -Able to work in Pandan Indah, Kuala Lumpur<br>
-                </p>
+                <p>{{job[0].job_requirement}}</p>
             </div>
         </div>
 
