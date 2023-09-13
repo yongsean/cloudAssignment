@@ -285,7 +285,7 @@ def display_job_details():
         FROM job j
         LEFT JOIN company c ON j.company = c.companyId
         LEFT JOIN industry i on j.industry = i.industryId
-        WHERE jobId = %s
+        WHERE jobId = %d
         """
         cursor = db_conn.cursor()
         try:
