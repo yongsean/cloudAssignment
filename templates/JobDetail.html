@@ -186,75 +186,46 @@
         display: block;
     }
 
-    /*JobDetail.html */
     .job-header {
-        display: flex;
-    }
+    background-color: #fff; /* Set a background color */
+    padding: 20px; /* Add padding to create separation from other content */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+    margin-bottom: 20px; /* Add margin to create separation from other content */
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
 
-    .company-about-content {
-        margin: 15px;
-    }
+.job-header img {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    height: auto;
+}
 
-    .overall-job-details {
-        display: flex;
-    }
+.company-about-content h1 {
+    font-size: 24px; /* Increase font size for the company name */
+    color: #333; /* Set a darker color for the company name */
+}
 
-    .left-side-details {
-        width: 70%;
-        margin: 15px;
-        font-size: 20px;
-    }
+.overall-job-details {
+    background-color: #fff; /* Set a background color */
+    padding: 20px; /* Add padding to create separation from other content */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+    display: flex;
+    margin-bottom: 20px; /* Add margin to create separation from other content */
+}
 
-    .left-side-details h2 {
-        color: #444444;
-        font-weight: bold;
-    }
+.left-side-details {
+    flex: 1; /* Expand to fill available space */
+    margin-right: 20px; /* Add margin to separate from the right side */
+}
 
+.left-side-details h2 {
+    font-size: 26px; /* Increase font size for section headings */
+    color: #444; /* Set a slightly darker color for section headings */
+}
 
-    .vl {
-        border-left: 1px solid #c3c3c3;
-        height: 500px;
-        margin-right: 10px;
-    }
-
-    .job-details-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .job-details-table th,
-    .job-details-table td {
-        padding: 15px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .job-details-table th {
-        text-align: left;
-        font-size: 20px;
-        width: 30%;
-        color: #444444;
-    }
-
-    .job-details-table td {
-        width: 70%
-    }
-
-    .button-apply-company {
-        background-color: #4CAF50;
-        color: white;
-        padding: 20px 30px;
-        border: none;
-        cursor: pointer;
-        margin: 0;
-        font-size: 18px;
-        margin-left: 300px;
-    }
-
-    .content-job-requirement p{
-        position: relative;
-        bottom: 25px;
-        line-height: 2.0;
-    }
+.right-side-details {
+    flex: 1; /* Expand to fill available space */
+}
 </style>
 
 <head>
