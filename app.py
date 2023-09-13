@@ -347,6 +347,10 @@ def display_job_details():
         return render_template('JobDetail.html', jobs=job_objects)
 
     return render_template('SearchCompany.html', jobs=job_objects)
+
+@app.template_filter('replace_and_keep_hyphen')
+def replace_and_keep_hyphen(s):
+    return s.replace('-', '<br>-')
             
 
 if __name__ == '__main__':
