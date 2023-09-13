@@ -231,11 +231,12 @@ def displayAllJobs():
                     publish_date = job[1]
                     job_type = job[2]
                     job_position = job[3]
+                    qualification_level=job[4]
                     job_requirement = job[5]
                     job_location = job[6]
                     salary = job[7]
-                    company_id=job[9]
-                    company_name = job[11]  # Extracted from the JOINed column
+                    company_id=job[8]
+                    company_name = job[9]  # Extracted from the JOINed column
 
                      # Generate the S3 image URL using custombucket and customregion
                     company_image_file_name_in_s3 = "comp-id-"+str(company_id)+"_image_file"
@@ -252,6 +253,7 @@ def displayAllJobs():
                         "publish_date": publish_date,
                         "job_type": job_type,
                         "job_position": job_position,
+                        "qualification_level": qualification_level,
                         "job_requirement": job_requirement,
                         "job_location": job_location,
                         "salary": salary,

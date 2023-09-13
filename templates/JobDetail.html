@@ -186,6 +186,7 @@
         display: block;
     }
 
+    /*JobDetail.html */
     .job-header {
         display: flex;
     }
@@ -198,10 +199,15 @@
         display: flex;
     }
 
-    .left-side-details{
+    .left-side-details {
         width: 70%;
         margin: 15px;
         font-size: 20px;
+    }
+
+    .left-side-details h2 {
+        color: #444444;
+        font-weight: bold;
     }
 
 
@@ -212,21 +218,37 @@
     }
 
     .job-details-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.job-details-table th,
-.job-details-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
+    .job-details-table th,
+    .job-details-table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
 
-.job-details-table th {
-    text-align: left;
-    font-size: 20px;
-}
+    .job-details-table th {
+        text-align: left;
+        font-size: 20px;
+        width: 30%;
+        color: #444444;
+    }
 
+    .job-details-table td {
+        width: 70%
+    }
+
+    .button-apply-company {
+        background-color: #4CAF50;
+        color: white;
+        padding: 20px 30px;
+        border: none;
+        cursor: pointer;
+        margin: 0;
+        font-size: 18px;
+        margin-left: 300px;
+    }
 </style>
 
 <head>
@@ -269,10 +291,13 @@
     <div class="overall-job-details">
         <div class="left-side-details">
             <div class="content-about-us">
-                <h2>About Us</h2>
-                <p>Established in 2011, VeecoTech is a leading Malaysia software IT solution company,
-                    specialized in software development, mobile app, ecommerce, web design,
-                    security and digital marketing.</p>
+                <h2>Job Summary</h2>
+                <p>We are seeking a creative and talented Video Intern to join our team.
+                    As a Video Intern, you will have the opportunity to gain hands-on experience in video production,
+                    editing, and storytelling for NOODOU, our Mandarin Platform.
+                    You will work closely with our marketing and creative teams to create
+                    engaging and compelling videos that effectively communicate our brand's message and capture the
+                    attention of our target audience.</p>
             </div>
 
             <div class="content-job-requirement">
@@ -326,6 +351,10 @@
                     <th>Phone Number</th>
                     <td>0129006648</td>
                 </tr>
+                <tr>
+                    <td colspan="2"><button type="submit" name="button-apply"
+                            class="button-apply-company">Apply</button></td>
+                </tr>
             </table>
         </div>
     </div>
@@ -353,4 +382,5 @@
         });
     </script>
 </body>
+
 </html>
