@@ -271,15 +271,9 @@ def displayAllJobs():
         print(f"Error: {str(e)}")
         return "An error occurred while fetching job data."
 
-# Define a route to display job details by ID
-@app.route("/display_job_details", methods=['POST', 'GET'])
-def display_job_details():
-    return render_template("JobDetail.html")
-
-# Run the Flask app
-if __name__ == "__main__":
-    app.run(debug=True)
-
+@app.route("/displayJobDetails", methods=['POST', 'GET'])
+def displayJobDetails():
+    return render_template('JobDetail.html')
 
 
 if __name__ == '__main__':
