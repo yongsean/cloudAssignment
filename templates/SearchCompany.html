@@ -315,6 +315,12 @@
     .confirm-filter-company {
         background-color: #444;
     }
+
+    table .job-content h2,
+    h3 {
+        font-weight: bold;
+        text-align: center;
+    }
 </style>
 
 <head>
@@ -396,55 +402,59 @@
                     </div>
                 </div>
             </form>
-                <div class="vl"></div>
+            <div class="vl"></div>
         </div>
         <div class="job-container">
-            <div class="job-listing">
-                {% for job in jobs %}
-                <div class="job-ad">
-                    <div class="job-text-adjust">
-                        <img src="{{job.image_url }}" style="width: 300px; height: 200px; position: relative; left:75px;">
-                        <table class="job-content">
-                            <tr>
-                                <td colspan="2">
-                                    <h2>{{ job.company_name }}</h2>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h3>{{ job.job_position }}</h3>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Location</th>
-                                <td>{{ job.job_location }}</td>
-                            </tr>
-                            <tr>
-                                <th>Allowance</th>
-                                <td>RM{{ job.salary }}</td>
-                            </tr>
-                            <tr>
-                                <th>Job Type</th>
-                                <td>{{ job.job_type }}</td>
-                            </tr>
-                            <tr>
-                                <th>Open For</th>
-                                <td>{{ job.qualification_level }}</td>
-                            </tr>
-                            <tr>
-                                <th>Publish Date</th>
-                                <td>{{ job.publish_date.strftime('%Y-%m-%d') }}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><button>VIEW</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                {% endfor %}
 
-            </div>
+            <form action="/JobDetail.html" autocomplete="on" method="post">
+                <div class="job-listing">
+                    {% for job in jobs %}
+                    <div class="job-ad">
+                        <div class="job-text-adjust">
+                            <img src="{{job.image_url }}"
+                                style="width: 300px; height: 200px; position: relative; left:75px;">
+                            <table class="job-content">
+                                <tr>
+                                    <td colspan="2">
+                                        <h2>{{ job.company_name }}</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h3>{{ job.job_position }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td>{{ job.job_location }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Allowance</th>
+                                    <td>RM{{ job.salary }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Job Type</th>
+                                    <td>{{ job.job_type }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Open For</th>
+                                    <td>{{ job.qualification_level }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Publish Date</th>
+                                    <td>{{ job.publish_date.strftime('%Y-%m-%d') }}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><button>VIEW</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </form>
         </div>
     </div>
 
