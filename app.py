@@ -315,8 +315,8 @@ def display_job_details():
         company_id = job[10]
         company_name = job[12]  # Extracted from the JOINed column
         industry_name = job[13]
-        company_email =job[13]
-        company_phone =job[14]
+        company_email =job[14]
+        company_phone =job[15]
 
         # Generate the S3 image URL using custombucket and customregion
         company_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
