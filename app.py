@@ -275,7 +275,7 @@ def displayAllJobs():
 @app.route("/displayJobDetails", methods=['POST'])
 def displayJobDetails():
         # Render the JobDetails.html template with the job_details
-    return render_template('JobDetails.html')
+    return render_template('JobDetail.html')
 
 
 if __name__ == '__main__':
