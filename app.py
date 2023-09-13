@@ -278,6 +278,7 @@ def display_job_details():
     if request.method == 'POST':
         # Get the selected job_id from the form
         selected_job_id = int(request.form.get('job_id'))
+        print("Selected Job ID:", selected_job_id)
 
         select_sql = """
         SELECT j.*, c.name AS company_name, i.name AS industry_name
