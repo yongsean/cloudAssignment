@@ -271,8 +271,8 @@ def displayAllJobs():
         print(f"Error: {str(e)}")
         return "An error occurred while fetching job data."
 
-@app.route("/displayJobFind", methods=['POST', 'GET'])
-def displayAllJobs():
+@app.route("/displayJobDetails", methods=['POST', 'GET'])
+def displayJobDetails():
     return render_template('JobDetail.html')
 
 
