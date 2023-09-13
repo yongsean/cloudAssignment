@@ -6,6 +6,7 @@ from botocore.exceptions import ClientError
 from pymysql import connections
 import os
 import boto3
+import datetime
 from config import *
 
 app = Flask(__name__)
@@ -618,6 +619,41 @@ def display_job_details():
 def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-')
 
+@app.route("/studentApplyCompany", methods=['POST', 'GET'])
+def studentApplyCompany():
+    try:
+                        # Create a cursor
+        cursor = db_conn.cursor()
+        
+        # Execute the SELECT COUNT(*) query to get the total row count
+        select_sql = "SELECT COUNT(*) as total FROM company"      
+        cursor.execute(select_sql)
+        apply_result = cursor.fetchone()
+        
+        cursor.close()
+        # Get the selected job_id from the form
+        company_id = int(apply_result[0]) + 1
+        apply_job_id = request.form.get('apply-job-id')
+        apply_student_id = session['loggedInStudent']
+        now = datetime.datetime.now()
+
+        insert_application_sql = "INSERT INTO companyApplication (applicationId, applyDateTime, status, student, job) VALUES (%s,%s,%s,%s,%s)"
+        cursor = db_conn.cursor()
+
+        cursor.execute(insert_application_sql,(company_id,now,'pending',apply_student_id,apply_job_id))
+        db_conn.commit()
+
+    except Exception as e:
+        db_conn.rollback()
+
+    finally:
+        cursor.close()
+
+    # Redirect back to the registration page with a success message
+    return render_template("trackApplication.html")
+
+
+
 
 @app.route('/downloadStudF04', methods=['GET'])
 def download_StudF04():
@@ -676,6 +712,8 @@ def download_StudF05():
 
     # Redirect the user to the URL of the PDF file
     return redirect(response)
+
+
             
 
 if __name__ == '__main__':
