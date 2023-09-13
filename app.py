@@ -342,7 +342,7 @@ def display_job_details():
         }
 
         job_objects.append(job_object)
-        return job_object['job_id']
+        return str(job_object['job_id'])
             
 
 if __name__ == '__main__':
