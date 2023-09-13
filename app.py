@@ -278,18 +278,18 @@ def display_job_details():
     if request.method == 'POST':
         # Get the selected job_id from the form
         selected_job_id = request.form.get('job_id')
-        print("Selected Job ID:", selected_job_id)
+
 
         select_sql = """
         SELECT j.*, c.name AS company_name, i.name AS industry_name
         FROM job j
         LEFT JOIN company c ON j.company = c.companyId
         LEFT JOIN industry i on j.industry = i.industryId
-        WHERE jobId = %d
+        WHERE jobId =%s
         """
         cursor = db_conn.cursor()
         try:
-            cursor.execute(select_sql, (selected_job_id))
+            cursor.execute(select_sql, (selected_job_id,))
             job = cursor.fetchone()
 
             if not job:
