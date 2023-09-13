@@ -198,7 +198,7 @@ def displayAllJobs():
 
     # Construct the base SQL query with a JOIN between the job and company tables
     select_sql = """
-        SELECT j.*, c.name AS company_name, c.email AS company_email, c.phone AS company_phone
+        SELECT j.*, c.name AS company_name
         FROM job j
         LEFT JOIN company c ON j.company = c.companyId
         WHERE 1
@@ -238,8 +238,7 @@ def displayAllJobs():
                     salary = job[8]
                     company_id=job[10]
                     company_name = job[12]  # Extracted from the JOINed column
-                    company_email =job[13]
-                    company_phone =job[14]
+
 
                      # Generate the S3 image URL using custombucket and customregion
                     company_image_file_name_in_s3 = "comp-id-"+str(company_id)+"_image_file"
@@ -262,8 +261,6 @@ def displayAllJobs():
                         "salary": salary,
                         "company_name": company_name,
                         "company_id": company_id,
-                        "company_email": company_email,
-                        "company_phone": company_phone,
                         "image_url": response
                     }
 
@@ -285,7 +282,7 @@ def display_job_details():
 
 
         select_sql = """
-        SELECT j.*, c.name AS company_name, i.name AS industry_name
+        SELECT j.*, c.name AS company_name, i.name AS industry_name, c.email AS company_email, c.phone AS company_phone
         FROM job j
         LEFT JOIN company c ON j.company = c.companyId
         LEFT JOIN industry i on j.industry = i.industryId
@@ -318,6 +315,8 @@ def display_job_details():
         company_id = job[10]
         company_name = job[12]  # Extracted from the JOINed column
         industry_name = job[13]
+        company_email =job[13]
+        company_phone =job[14]
 
         # Generate the S3 image URL using custombucket and customregion
         company_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
@@ -344,6 +343,8 @@ def display_job_details():
             "company_id": company_id,
             "num_of_operate": num_of_operate,
             "industry_name": industry_name,
+            "company_email": company_email,
+            "company_phone": company_phone,
             "image_url": response
         }
 
