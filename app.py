@@ -151,7 +151,6 @@ def addCompanyRegistration():
         print(str(e))
         print("failed get count...")
         return render_template('home.html')
-    
 
 @app.route("/verifyLogin", methods=['POST', 'GET'])
 def verifyLogin():
@@ -174,7 +173,7 @@ def verifyLogin():
         else:
             # User not found, login failed
             return render_template('LoginStudent.html', msg="Access Denied: Invalid Email or Ic Number")
-    
+
 @app.route('/student_home', methods=['GET', 'POST'])
 def student_home():
     id = session['loggedInStudent']
