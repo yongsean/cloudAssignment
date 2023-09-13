@@ -276,7 +276,7 @@ def displayAllJobs():
 @app.route("/displayJobDetails", methods=['POST', 'GET'])
 def display_job_details():
     # Get the selected job_id from the form
-    selected_job_id = str(request.form['job_id'])
+    selected_job_id = (int)(request.form['transfer-id'])
     return "Selected Job ID:", selected_job_id
             
 
