@@ -272,16 +272,5 @@ def displayAllJobs():
         print(f"Error: {str(e)}")
         return "An error occurred while fetching job data."
 
-@app.route('/displayJobDetails', methods=['POST', 'GET'])
-def displayJobDetails():
-  if request.method == 'POST':
-    job_data = request.form['job']
-    session['job'] = job_data
-  else:
-    job_data = session.get('job')
-
-  return render_template('JobDetail.html', job_data=job_data)
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
