@@ -277,7 +277,7 @@ def displayAllJobs():
 def display_job_details():
     if request.method == 'POST':
         # Get the selected job_id from the form
-        selected_job_id = (int)(request.form.get('job_id'))
+        selected_job_id = request.form.get('job_id')
 
 
         select_sql = """
@@ -285,7 +285,7 @@ def display_job_details():
         FROM job j
         LEFT JOIN company c ON j.company = c.companyId
         LEFT JOIN industry i on j.industry = i.industryId
-        WHERE jobId =%d
+        WHERE jobId =%s
         """
         cursor = db_conn.cursor()
         try:
