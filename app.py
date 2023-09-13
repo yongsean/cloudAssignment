@@ -287,31 +287,36 @@ def display_job_details():
         """
         cursor = db_conn.cursor()
         try:
-            cursor.execute(select_sql,(selected_job_id))
-            jobs=cursor.fetchone()
+            cursor.execute(select_sql, (selected_job_id,))
+            job = cursor.fetchone()
 
             if not job:
-                    return "No such job exist."
+                return "No such job exists."
         except Exception as e:
             return str(e)
-        
+
+        # Initialize job as an empty list
         job_objects = []
+
+        # ... rest of your code ...
+
         for job in jobs:
+            # Append job objects to the list
             job_id = job[0]
             publish_date = job[1]
             job_type = job[2]
             job_position = job[3]
-            qualification_level=job[4]
+            qualification_level = job[4]
             job_requirement = job[6]
             job_location = job[7]
             salary = job[8]
-            num_of_operate=job[9]
-            company_id=job[10]
+            num_of_operate = job[9]
+            company_id = job[10]
             company_name = job[12]  # Extracted from the JOINed column
-            industry_name =job[13]
+            industry_name = job[13]
 
-                     # Generate the S3 image URL using custombucket and customregion
-            company_image_file_name_in_s3 = "comp-id-"+str(company_id)+"_image_file"
+            # Generate the S3 image URL using custombucket and customregion
+            company_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
             s3 = boto3.client('s3', region_name=customregion)
             bucket_name = custombucket
 
@@ -338,7 +343,11 @@ def display_job_details():
             }
 
             job_objects.append(job_object)
-    return render_template('JobDetail.html', jobs=job_objects)
+
+        return render_template('JobDetail.html', jobs=job_objects)
+
+    return render_template('SearchCompany.html', jobs=job_objects)
+
             
 
 if __name__ == '__main__':
