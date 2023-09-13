@@ -342,10 +342,7 @@ def display_job_details():
         }
 
         job_objects.append(job_object)
-
-        return render_template('JobDetail.html', jobs=job_objects)
-
-    return render_template('SearchCompany.html', jobs=job_objects)
+        return job_object.job_id
             
 
 if __name__ == '__main__':
