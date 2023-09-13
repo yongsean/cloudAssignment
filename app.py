@@ -232,11 +232,11 @@ def displayAllJobs():
                     job_type = job[2]
                     job_position = job[3]
                     qualification_level=job[4]
-                    job_requirement = job[5]
-                    job_location = job[6]
-                    salary = job[7]
-                    company_id=job[8]
-                    company_name = job[9]  # Extracted from the JOINed column
+                    job_requirement = job[6]
+                    job_location = job[7]
+                    salary = job[8]
+                    company_id=job[9]
+                    company_name = job[10]  # Extracted from the JOINed column
 
                      # Generate the S3 image URL using custombucket and customregion
                     company_image_file_name_in_s3 = "comp-id-"+str(company_id)+"_image_file"
