@@ -280,72 +280,7 @@ def display_job_details():
         selected_job_id = request.form.get('job_id')
 
 
-        select_sql = """
-        SELECT j.*, c.name AS company_name, i.name AS industry_name
-        FROM job j
-        LEFT JOIN company c ON j.company = c.companyId
-        LEFT JOIN industry i on j.industry = i.industryId
-        WHERE jobId =%s
-        """
-        cursor = db_conn.cursor()
-        try:
-            cursor.execute(select_sql, (selected_job_id,))
-            job = cursor.fetchone()
-
-            if not job:
-                return "No such job exists."
-        except Exception as e:
-            return str(e)
-
-        # Initialize job_objects as an empty list
-        job_objects = []
-
-        # Append job details to job_objects
-        job_id = job[0]
-        publish_date = job[1]
-        job_type = job[2]
-        job_position = job[3]
-        qualification_level = job[4]
-        job_requirement = job[6]
-        job_location = job[7]
-        salary = job[8]
-        num_of_operate = job[9]
-        company_id = job[10]
-        company_name = job[12]  # Extracted from the JOINed column
-        industry_name = job[13]
-
-        # Generate the S3 image URL using custombucket and customregion
-        company_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
-        s3 = boto3.client('s3', region_name=customregion)
-        bucket_name = custombucket
-
-        response = s3.generate_presigned_url(
-            'get_object',
-            Params={'Bucket': bucket_name, 'Key': company_image_file_name_in_s3},
-            ExpiresIn=1000  # Adjust the expiration time as needed
-        )
-
-        job_object = {
-            "job_id": job_id,
-            "publish_date": publish_date,
-            "job_type": job_type,
-            "job_position": job_position,
-            "qualification_level": qualification_level,
-            "job_requirement": job_requirement,
-            "job_location": job_location,
-            "salary": salary,
-            "company_name": company_name,
-            "company_id": company_id,
-            "num_of_operate": num_of_operate,
-            "industry_name": industry_name,
-            "image_url": response
-        }
-
-        job_objects.append(job_object)
-
-        return render_template('JobDetail.html', jobs=job_objects)
-
-    return render_template('SearchCompany.html', jobs=job_objects)
+    return selected_job_id
             
 
 if __name__ == '__main__':
