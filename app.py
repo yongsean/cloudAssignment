@@ -285,7 +285,7 @@ def display_job_details():
         LEFT JOIN industry i on j.industry = i.industryId
         WHERE jobId = %s
         """
-        cursor = db_conn.cursor
+        cursor = db_conn.cursor()
         try:
             cursor.execute(select_sql,(selected_job_id))
             jobs=cursor.fechone()
