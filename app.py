@@ -292,10 +292,10 @@ def display_job_details():
             cursor.execute(select_sql, (selected_job_id,))
             job = cursor.fetchone()
 
+            if not job:
+                return "No such job exists."
         except Exception as e:
-        # Handle database query errors, log the error, or return an error message
-            print("Database query error:", str(e))
-            return "An error occurred while fetching job details."
+            return str(e)
 
         # Initialize job_objects as an empty list
         job_objects = []
