@@ -289,7 +289,7 @@ def display_job_details():
         """
         cursor = db_conn.cursor()
         try:
-            cursor.execute(select_sql, (selected_job_id,))
+            cursor.execute(select_sql, (selected_job_id))
             job = cursor.fetchone()
 
             if not job:
