@@ -274,7 +274,6 @@ def displayAllJobs():
 
 @app.route('/displayJobDetails', methods=['POST', 'GET'])
 def displayJobDetails():
-  """Gets the job data from the session and renders the JobDetail.html template."""
   if request.method == 'POST':
     job_data = request.form['job']
     session['job'] = job_data
