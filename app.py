@@ -271,26 +271,10 @@ def displayAllJobs():
         print(f"Error: {str(e)}")
         return "An error occurred while fetching job data."
 
-# Import necessary Flask modules and libraries
-
-# Your Flask app initialization code
-
-# Define a function to fetch job details by ID from the database
-def fetch_job_details_by_id(job_id):
-    # Perform database query to retrieve job details using the provided job_id
-    # Replace this with your actual database query logic
-    job_details = {}  # This should be populated with job details from the database
-
-    return job_details
-
 # Define a route to display job details by ID
-@app.route("/display_job_details/<int:job_id>")
-def display_job_details(job_id):
-    job_details = fetch_job_details_by_id(job_id)
-    if not job_details:
-        return "Job not found", 404
-
-    return render_template("JobDetail.html", job=job_details)
+@app.route("/display_job_details", methods=['POST', 'GET'])
+def display_job_details():
+    return render_template("JobDetail.html")
 
 # Run the Flask app
 if __name__ == "__main__":
