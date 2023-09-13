@@ -250,7 +250,7 @@
         margin-left: 300px;
     }
 
-    .content-job-requirement p{
+    .content-job-requirement p {
         line-height: 2.0;
     }
 </style>
@@ -292,86 +292,88 @@
     </div>
     <hr>
 
-    <div class="overall-job-details">
-        <input type="hidden" name="apply-job-id" value="{{ jobs[0].job_id }}">
-        <div class="left-side-details">
-            <div class="content-about-us">
-                <h2>Job Summary</h2>
-                <p>{{jobs[0].job_description}}</p>
+    <form action="/studentApplyCompany" autocomplete="on" name="job" method="POST">
+        <div class="overall-job-details">
+            <input type="hidden" name="apply-job-id" value="{{ jobs[0].job_id }}">
+            <div class="left-side-details">
+                <div class="content-about-us">
+                    <h2>Job Summary</h2>
+                    <p>{{jobs[0].job_description}}</p>
+                </div>
+
+                <div class="content-job-requirement">
+                    <h2>Job Requirement</h2>
+                    <p>{{ jobs[0].job_requirement|replace_and_keep_hyphen|safe }}</p>
+                </div>
             </div>
 
-            <div class="content-job-requirement">
-                <h2>Job Requirement</h2>
-                <p>{{ jobs[0].job_requirement|replace_and_keep_hyphen|safe }}</p>
+            <div class="vl"></div>
+
+            <div class="right-side-details">
+                <table class="job-details-table">
+                    <tr>
+                        <th>Job Title</th>
+                        <td>{{jobs[0].job_position}}</td>
+                    </tr>
+                    <tr>
+                        <th>Job Type</th>
+                        <td>{{jobs[0].job_type}}</td>
+                    </tr>
+                    <tr>
+                        <th>Working Address</th>
+                        <td>{{jobs[0].job_location}}</td>
+                    </tr>
+                    <tr>
+                        <th>Allowance</th>
+                        <td>RM{{ '%.2f'|format(jobs[0].salary) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Number of operating</th>
+                        <td>{{jobs[0].num_of_operate}} Person</td>
+                    </tr>
+                    <tr>
+                        <th>Industry Type</th>
+                        <td>{{jobs[0].industry_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Person In Charge</th>
+                        <td>{{jobs[0].company_email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td>{{jobs[0].company_phone}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit" name="button-apply"
+                                class="button-apply-company">Apply</button></td>
+                    </tr>
+                </table>
             </div>
         </div>
+    </form>
 
-        <div class="vl"></div>
+        <script src="/bundles/bootstrap?v=lescQEuG5u4jd-GcVDBcbpUOSyTDIg0Kk9zHDX55GCw1"></script>
 
-        <div class="right-side-details">
-            <table class="job-details-table">
-                <tr>
-                    <th>Job Title</th>
-                    <td>{{jobs[0].job_position}}</td>
-                </tr>
-                <tr>
-                    <th>Job Type</th>
-                    <td>{{jobs[0].job_type}}</td>
-                </tr>
-                <tr>
-                    <th>Working Address</th>
-                    <td>{{jobs[0].job_location}}</td>
-                </tr>
-                <tr>
-                    <th>Allowance</th>
-                    <td>RM{{ '%.2f'|format(jobs[0].salary) }}</td>
-                </tr>
-                <tr>
-                    <th>Number of operating</th>
-                    <td>{{jobs[0].num_of_operate}} Person</td>
-                </tr>
-                <tr>
-                    <th>Industry Type</th>
-                    <td>{{jobs[0].industry_name}}</td>
-                </tr>
-                <tr>
-                    <th>Person In Charge</th>
-                    <td>{{jobs[0].company_email}}</td>
-                </tr>
-                <tr>
-                    <th>Phone Number</th>
-                    <td>{{jobs[0].company_phone}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><button type="submit" name="button-apply"
-                            class="button-apply-company">Apply</button></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <script src="/bundles/bootstrap?v=lescQEuG5u4jd-GcVDBcbpUOSyTDIg0Kk9zHDX55GCw1"></script>
-
-    <script>
-        function toggleDropdown() {
-            var dropdownOptions = document.getElementById("dropdownOptions");
-            if (dropdownOptions.style.display === "block") {
-                dropdownOptions.style.display = "none";
-            } else {
-                dropdownOptions.style.display = "block";
-            }
-        }
-
-        // Add a click event listener to the document
-        document.addEventListener("click", function (event) {
-            var dropdown = document.querySelector(".dropdown");
-            if (!dropdown.contains(event.target)) {
-                // Clicked outside the dropdown, so close it
+        <script>
+            function toggleDropdown() {
                 var dropdownOptions = document.getElementById("dropdownOptions");
-                dropdownOptions.style.display = "none";
+                if (dropdownOptions.style.display === "block") {
+                    dropdownOptions.style.display = "none";
+                } else {
+                    dropdownOptions.style.display = "block";
+                }
             }
-        });
-    </script>
+
+            // Add a click event listener to the document
+            document.addEventListener("click", function (event) {
+                var dropdown = document.querySelector(".dropdown");
+                if (!dropdown.contains(event.target)) {
+                    // Clicked outside the dropdown, so close it
+                    var dropdownOptions = document.getElementById("dropdownOptions");
+                    dropdownOptions.style.display = "none";
+                }
+            });
+        </script>
 </body>
 
 </html>
