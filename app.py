@@ -275,10 +275,15 @@ def displayAllJobs():
 
 @app.route("/displayJobDetails", methods=['POST', 'GET'])
 def display_job_details():
-    # Get the selected job_id from the form
-    selected_job_id = request.form.get('transfer-id')
-    print("Selected Job ID:", selected_job_id)
-    return selected_job_id
+    if request.method == 'POST':
+        selected_job_id = request.form.get('transfer-id')
+        print("Selected Job ID:", selected_job_id)
+        # Add additional processing logic here
+        return selected_job_id
+    else:
+        # Handle GET request or other cases
+        return "No job ID received"
+
             
 
 if __name__ == '__main__':
