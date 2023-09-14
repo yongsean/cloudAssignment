@@ -372,13 +372,15 @@
             <td>09/09/2023</td>
             <td><span class="badge badge-pending">Confirmed</span></td>
         </tr>
+        {% for job in jobs %}
         <tr>
             <td>{{application.company_name}}</td>
             <td>{{application.job_position}}</td>
             <td>{{application.job_location}}</td>
             <td>{{application.applyDateTime}}</td>
-            <td><span class="badge badge-pending">{{application.status}}</span></td>
+            <td><span class="badge badge-pending">{{application.status}}</span></td>  
         </tr>
+        {% endfor %}
     </table>
 
     <div class="pagination">
