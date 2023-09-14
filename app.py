@@ -669,28 +669,29 @@ def studentApplyCompany():
         application_objects = []
 
         # Append job details to job_objects
-        application_id = application_objects[0]
-        applyDateTime = application_objects[1]
-        status = application_objects[2]
-        student = application_objects[3]
-        job = application_objects[4]
-        company_name=application_objects[5]
-        job_position = application_objects[6]
-        job_location = application_objects[7]
+        for row in application_track:
+            application_id = row[0]
+            applyDateTime = row[1]
+            status = row[2]
+            student = row[3]
+            job = row[4]
+            company_name=row[5]
+            job_position = row[6]
+            job_location = row[7]
 
 
-        application_object = {
-            "application_id": application_id,
-            "applyDateTime": applyDateTime,
-            "status": status,
-            "student": student,
-            "job": job,
-            "company_name":company_name,
-            "job_position": job_position,
-            "job_location": job_location
-        }
+            application_object = {
+                "application_id": application_id,
+                "applyDateTime": applyDateTime,
+                "status": status,
+                "student": student,
+                "job": job,
+                "company_name":company_name,
+                "job_position": job_position,
+                "job_location": job_location
+            }
 
-        application_objects.append(application_object)
+            application_objects.append(application_object)
         return render_template('trackApplication.html', application=application_objects)
     
     except Exception as e:
