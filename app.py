@@ -622,11 +622,11 @@ def replace_and_keep_hyphen(s):
 @app.route("/studentApplyCompany", methods=['POST', 'GET'])
 def studentApplyCompany():
     try:
-                        # Create a cursor
+        # Create a cursor
         cursor = db_conn.cursor()
         
         # Execute the SELECT COUNT(*) query to get the total row count
-        select_sql = "SELECT COUNT(*) as total FROM company"      
+        select_sql = "SELECT COUNT(*) as total FROM companyApplication"      
         cursor.execute(select_sql)
         apply_result = cursor.fetchone()
         
@@ -643,6 +643,56 @@ def studentApplyCompany():
         cursor.execute(insert_application_sql,(company_id,now,'pending',apply_student_id,apply_job_id))
         db_conn.commit()
 
+        #Get the application information
+               # Create a cursor
+        cursor = db_conn.cursor()
+        
+        # Execute the SELECT COUNT(*) query to get the total row count
+        select_application = """"
+        SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location"
+        from companyApplication ca
+        LEFT JOIN company c ON ca.company = c.companyId
+        LEFT JOIN job i on ca.job = j.jobId
+        WHERE ca.student=%s
+        """     
+        try:
+            cursor.execute(select_application, (apply_student_id,))
+            application_track = cursor.fetchone()
+
+            if not application_track:
+                return "No such company application"
+        except Exception as e:
+            return str(e)
+        
+        cursor.close()
+        # Initialize application object as an empty list
+        application_objects = []
+
+        # Append job details to job_objects
+        application_id = application_objects[0]
+        applyDateTime = application_objects[1]
+        status = application_objects[2]
+        student = application_objects[3]
+        job = application_objects[4]
+        company_name=application_objects[5]
+        job_position = application_objects[6]
+        job_location = application_objects[7]
+
+
+        application_object = {
+            "application_id": application_id,
+            "applyDateTime": applyDateTime,
+            "status": status,
+            "student": student,
+            "job": job,
+            "company_name":company_name,
+            "job_position": job_position,
+            "job_location": job_location
+        }
+
+        application_objects.append(application_object)
+        return render_template('trackApplication.html', application=application_objects)
+    
     except Exception as e:
         db_conn.rollback()
 
