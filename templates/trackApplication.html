@@ -372,13 +372,13 @@
             <td>09/09/2023</td>
             <td><span class="badge badge-pending">Confirmed</span></td>
         </tr>
-        {% for job in jobs %}
+        {% for applications in application %}
         <tr>
-            <td>{{application.company_name}}</td>
-            <td>{{application.job_position}}</td>
-            <td>{{application.job_location}}</td>
-            <td>{{application.applyDateTime}}</td>
-            <td><span class="badge badge-pending">{{application.status}}</span></td>  
+            <td>{{applications.company_name}}</td>
+            <td>{{applications.job_position}}</td>
+            <td>{{applications.job_location}}</td>
+            <td>{{applications.applyDateTime}}</td>
+            <td><span class="badge badge-pending">{{applications.status}}</span></td>  
         </tr>
         {% endfor %}
     </table>
