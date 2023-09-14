@@ -652,7 +652,7 @@ def studentApplyCompany():
         SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
         from companyApplication ca
         LEFT JOIN company c ON ca.company = c.companyId
-        LEFT JOIN job i on ca.job = j.jobId
+        LEFT JOIN job j on ca.job = j.jobId
         WHERE ca.student=%s
         """     
         try:
