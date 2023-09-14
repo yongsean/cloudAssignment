@@ -648,7 +648,7 @@ def studentApplyCompany():
         cursor = db_conn.cursor()
         
         # Execute the SELECT COUNT(*) query to get the total row count
-        select_application = """"
+        select_application = """
         SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
         from companyApplication ca
         LEFT JOIN company c ON ca.company = c.companyId
