@@ -657,7 +657,7 @@ def studentApplyCompany():
         """     
         try:
             cursor.execute(select_application, (apply_student_id,))
-            application_track = cursor.fetchone()
+            application_track = cursor.fetchall()
 
             if not application_track:
                 return "No such company application"
