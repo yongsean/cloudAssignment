@@ -250,8 +250,30 @@
         margin-left: 300px;
     }
 
+    .button-apply-company:disabled {
+        background-color: #ccc;
+        color: #888; 
+        cursor: not-allowed; 
+    }
+
     .content-job-requirement p {
         line-height: 2.0;
+    }
+
+    .button-back {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* Adjust the background color to your preference */
+        color: #fff; /* Adjust the text color to your preference */
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    /* Style for the back button on hover */
+    .button-back:hover {
+        background-color: #0056b3; /* Adjust the hover background color to your preference */
     }
 </style>
 
@@ -283,6 +305,7 @@
 
 <body>
     <div class="job-header">
+        <a href="/SearchCompany.html" class="button-back">Back to Search</a>
         <div class="company-about-content">
             <img src="{{ jobs[0].image_url }}" style="width: 250px; height: 150px; position: relative;">
         </div>
