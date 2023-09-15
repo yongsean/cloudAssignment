@@ -635,7 +635,7 @@ def display_job_details():
 
 @app.template_filter('replace_and_keep_hyphen')
 def replace_and_keep_hyphen(s):
-    return s.replace('-', '<br>-')
+    return s.replace('-', '<br>', 1).replace('-', '<br>-')
 
 @app.route("/studentApplyCompany", methods=['POST', 'GET'])
 def studentApplyCompany():
