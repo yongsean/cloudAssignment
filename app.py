@@ -619,6 +619,16 @@ def display_job_details():
 def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-')
 
+
+
+def has_student_applied(job_id, student_id):
+    cursor = db_conn.cursor()
+    select_sql = "SELECT COUNT(*) FROM companyApplication WHERE job = %s AND student = %s"
+    cursor.execute(select_sql, (job_id, student_id))
+    count = cursor.fetchone()[0]
+    cursor.close()
+    return count > 0
+
 @app.route("/studentApplyCompany", methods=['POST', 'GET'])
 def studentApplyCompany():
     try:
@@ -631,6 +641,7 @@ def studentApplyCompany():
         apply_result = cursor.fetchone()
         
         cursor.close()
+        
         # Get the selected job_id from the form
         company_id = int(apply_result[0]) + 1
         apply_job_id = request.form.get('apply-job-id')
@@ -638,6 +649,13 @@ def studentApplyCompany():
         now = datetime.datetime.now()
 
         session['applied_jobs'] = [apply_job_id]
+
+        # Check if the student has already applied for the job
+        has_applied = has_student_applied(apply_job_id, apply_student_id)
+
+        # If the student has already applied, flash a message and redirect
+        if has_applied:
+            return redirect("/displayJobDetails")  # You can change this URL as needed
         
         insert_application_sql = "INSERT INTO companyApplication (applicationId, applyDateTime, status, student, job) VALUES (%s,%s,%s,%s,%s)"
         cursor = db_conn.cursor()
@@ -645,17 +663,14 @@ def studentApplyCompany():
         cursor.execute(insert_application_sql,(company_id,now,'pending',apply_student_id,apply_job_id))
         db_conn.commit()
 
-        #Get the application information
-               # Create a cursor
+        # Get the application information
         cursor = db_conn.cursor()
-        
-        # Execute the SELECT COUNT(*) query to get the total row count
         select_application = """
         SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
-        from companyApplication ca
-        LEFT JOIN job j on ca.job = j.jobId
-        LEFT JOIN company c on j.company = c.companyId
-        WHERE ca.student=%s
+        FROM companyApplication ca
+        LEFT JOIN job j ON ca.job = j.jobId
+        LEFT JOIN company c ON j.company = c.companyId
+        WHERE ca.student = %s
         """     
         try:
             cursor.execute(select_application, (apply_student_id,))
@@ -667,6 +682,7 @@ def studentApplyCompany():
             return str(e)
         
         cursor.close()
+
         # Initialize application object as an empty list
         application_objects = []
 
@@ -677,10 +693,9 @@ def studentApplyCompany():
             status = row[2]
             student = row[3]
             job = row[4]
-            company_name=row[5]
+            company_name = row[5]
             job_position = row[6]
             job_location = row[7]
-
 
             application_object = {
                 "application_id": application_id,
@@ -688,13 +703,14 @@ def studentApplyCompany():
                 "status": status,
                 "student": student,
                 "job": job,
-                "company_name":company_name,
+                "company_name": company_name,
                 "job_position": job_position,
                 "job_location": job_location
             }
 
             application_objects.append(application_object)
-        return render_template('trackApplication.html', application=application_objects)
+        
+        return render_template('trackApplication.html', application=application_objects, has_applied=has_applied)
     
     except Exception as e:
         db_conn.rollback()
@@ -704,9 +720,6 @@ def studentApplyCompany():
 
     # Redirect back to the registration page with a success message
     return render_template("trackApplication.html")
-
-
-
 
 @app.route('/downloadStudF04', methods=['GET'])
 def download_StudF04():

@@ -292,9 +292,6 @@
     </div>
     <hr>
 
-    {% if jobs[0].job_id in session['applied_jobs'] %}
-    <p>You have already applied for this job.</p>
-    {% else %}
     <form action="/studentApplyCompany" autocomplete="on" name="job" method="POST">
         <div class="overall-job-details">
             <input type="hidden" name="apply-job-id" value="{{ jobs[0].job_id }}">
@@ -347,14 +344,18 @@
                         <td>{{jobs[0].company_phone}}</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><button type="submit" name="button-apply"
-                                class="button-apply-company">Apply</button></td>
+                        <td colspan="2">
+                            {% if not has_applied %}
+                            <button type="submit" name="button-apply" class="button-apply-company">Apply</button>
+                            {% else %}
+                            <button type="button" class="button-apply-company" disabled>Already Applied</button>
+                            {% endif %}
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
     </form>
-    {% endif %}
     <script src="/bundles/bootstrap?v=lescQEuG5u4jd-GcVDBcbpUOSyTDIg0Kk9zHDX55GCw1"></script>
 
     <script>
