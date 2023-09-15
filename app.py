@@ -538,10 +538,11 @@ def displayAllJobs():
 
 @app.route("/displayJobDetails", methods=['POST', 'GET'])
 def display_job_details():
+    job_objects = []  # Initialize job_objects as an empty list
+
     if request.method == 'POST':
         # Get the selected job_id from the form
         selected_job_id = request.form.get('transfer-id')
-
 
         select_sql = """
         SELECT j.*, c.name AS company_name, i.name AS industry_name, c.email AS company_email, c.phone AS company_phone
@@ -560,16 +561,13 @@ def display_job_details():
         except Exception as e:
             return str(e)
 
-        # Initialize job_objects as an empty list
-        job_objects = []
-
         # Append job details to job_objects
         job_id = job[0]
         publish_date = job[1]
         job_type = job[2]
         job_position = job[3]
         qualification_level = job[4]
-        job_description=job[5]
+        job_description = job[5]
         job_requirement = job[6]
         job_location = job[7]
         salary = job[8]
@@ -577,8 +575,8 @@ def display_job_details():
         company_id = job[10]
         company_name = job[12]  # Extracted from the JOINed column
         industry_name = job[13]
-        company_email =job[14]
-        company_phone =job[15]
+        company_email = job[14]
+        company_phone = job[15]
 
         # Generate the S3 image URL using custombucket and customregion
         company_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
@@ -597,7 +595,7 @@ def display_job_details():
             "job_type": job_type,
             "job_position": job_position,
             "qualification_level": qualification_level,
-            "job_description":job_description,
+            "job_description": job_description,
             "job_requirement": job_requirement,
             "job_location": job_location,
             "salary": salary,
@@ -611,9 +609,9 @@ def display_job_details():
         }
 
         job_objects.append(job_object)
-        return render_template('JobDetail.html', jobs=job_objects)
-
+    
     return render_template('SearchCompany.html', jobs=job_objects)
+
 
 @app.template_filter('replace_and_keep_hyphen')
 def replace_and_keep_hyphen(s):
