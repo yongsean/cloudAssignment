@@ -345,10 +345,10 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            {% if not has_applied %}
+                            {% if not job_applied %}
                             <button type="submit" name="button-apply" class="button-apply-company">Apply</button>
                             {% else %}
-                            <button type="button" class="button-apply-company" disabled>Already Applied</button>
+                            <button type="button" disabled class="button-apply-company">Already Applied</button>
                             {% endif %}
                         </td>
                     </tr>
@@ -356,6 +356,7 @@
             </div>
         </div>
     </form>
+
     <script src="/bundles/bootstrap?v=lescQEuG5u4jd-GcVDBcbpUOSyTDIg0Kk9zHDX55GCw1"></script>
 
     <script>

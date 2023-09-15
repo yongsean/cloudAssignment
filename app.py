@@ -538,11 +538,12 @@ def displayAllJobs():
 
 @app.route("/displayJobDetails", methods=['POST', 'GET'])
 def display_job_details():
-    job_objects = []  # Initialize job_objects as an empty list
-
     if request.method == 'POST':
         # Get the selected job_id from the form
         selected_job_id = request.form.get('transfer-id')
+
+        apply_student_id = session.get('loggedInStudent')
+
 
         select_sql = """
         SELECT j.*, c.name AS company_name, i.name AS industry_name, c.email AS company_email, c.phone AS company_phone
@@ -561,13 +562,16 @@ def display_job_details():
         except Exception as e:
             return str(e)
 
+        # Initialize job_objects as an empty list
+        job_objects = []
+
         # Append job details to job_objects
         job_id = job[0]
         publish_date = job[1]
         job_type = job[2]
         job_position = job[3]
         qualification_level = job[4]
-        job_description = job[5]
+        job_description=job[5]
         job_requirement = job[6]
         job_location = job[7]
         salary = job[8]
@@ -575,8 +579,8 @@ def display_job_details():
         company_id = job[10]
         company_name = job[12]  # Extracted from the JOINed column
         industry_name = job[13]
-        company_email = job[14]
-        company_phone = job[15]
+        company_email =job[14]
+        company_phone =job[15]
 
         # Generate the S3 image URL using custombucket and customregion
         company_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
@@ -595,7 +599,7 @@ def display_job_details():
             "job_type": job_type,
             "job_position": job_position,
             "qualification_level": qualification_level,
-            "job_description": job_description,
+            "job_description":job_description,
             "job_requirement": job_requirement,
             "job_location": job_location,
             "salary": salary,
@@ -609,23 +613,29 @@ def display_job_details():
         }
 
         job_objects.append(job_object)
-    
-    return render_template('SearchCompany.html', jobs=job_objects)
 
+        job_applied = False  # Initialize as False by default
+
+        # Check if the student has applied for this job
+        check_application_sql = """
+        SELECT COUNT(*) as total
+        FROM companyApplication
+        WHERE student = %s AND job = %s
+        """
+
+        cursor.execute(check_application_sql, (apply_student_id, selected_job_id))
+        application_count = cursor.fetchone()
+
+        if application_count and application_count[0] > 0:
+            job_applied = True
+
+        return render_template('JobDetail.html', jobs=job_objects, job_applied=job_applied)
+
+    return render_template('SearchCompany.html', jobs=job_objects)
 
 @app.template_filter('replace_and_keep_hyphen')
 def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-')
-
-
-
-def has_student_applied(job_id, student_id):
-    cursor = db_conn.cursor()
-    select_sql = "SELECT COUNT(*) FROM companyApplication WHERE job = %s AND student = %s"
-    cursor.execute(select_sql, (job_id, student_id))
-    count = cursor.fetchone()[0]
-    cursor.close()
-    return count > 0
 
 @app.route("/studentApplyCompany", methods=['POST', 'GET'])
 def studentApplyCompany():
@@ -639,7 +649,6 @@ def studentApplyCompany():
         apply_result = cursor.fetchone()
         
         cursor.close()
-        
         # Get the selected job_id from the form
         company_id = int(apply_result[0]) + 1
         apply_job_id = request.form.get('apply-job-id')
@@ -647,28 +656,23 @@ def studentApplyCompany():
         now = datetime.datetime.now()
 
         session['applied_jobs'] = [apply_job_id]
-
-        # Check if the student has already applied for the job
-        has_applied = has_student_applied(apply_job_id, apply_student_id)
-
-        # If the student has already applied, flash a message and redirect
-        if has_applied:
-            return redirect("/displayJobDetails")  # You can change this URL as needed
-        
         insert_application_sql = "INSERT INTO companyApplication (applicationId, applyDateTime, status, student, job) VALUES (%s,%s,%s,%s,%s)"
         cursor = db_conn.cursor()
 
         cursor.execute(insert_application_sql,(company_id,now,'pending',apply_student_id,apply_job_id))
         db_conn.commit()
 
-        # Get the application information
+        #Get the application information
+               # Create a cursor
         cursor = db_conn.cursor()
+        
+        # Execute the SELECT COUNT(*) query to get the total row count
         select_application = """
         SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
-        FROM companyApplication ca
-        LEFT JOIN job j ON ca.job = j.jobId
-        LEFT JOIN company c ON j.company = c.companyId
-        WHERE ca.student = %s
+        from companyApplication ca
+        LEFT JOIN job j on ca.job = j.jobId
+        LEFT JOIN company c on j.company = c.companyId
+        WHERE ca.student=%s
         """     
         try:
             cursor.execute(select_application, (apply_student_id,))
@@ -680,7 +684,6 @@ def studentApplyCompany():
             return str(e)
         
         cursor.close()
-
         # Initialize application object as an empty list
         application_objects = []
 
@@ -691,9 +694,10 @@ def studentApplyCompany():
             status = row[2]
             student = row[3]
             job = row[4]
-            company_name = row[5]
+            company_name=row[5]
             job_position = row[6]
             job_location = row[7]
+
 
             application_object = {
                 "application_id": application_id,
@@ -701,14 +705,13 @@ def studentApplyCompany():
                 "status": status,
                 "student": student,
                 "job": job,
-                "company_name": company_name,
+                "company_name":company_name,
                 "job_position": job_position,
                 "job_location": job_location
             }
 
             application_objects.append(application_object)
-        
-        return render_template('trackApplication.html', application=application_objects, has_applied=has_applied)
+        return render_template('trackApplication.html', application=application_objects)
     
     except Exception as e:
         db_conn.rollback()
@@ -718,6 +721,9 @@ def studentApplyCompany():
 
     # Redirect back to the registration page with a success message
     return render_template("trackApplication.html")
+
+
+
 
 @app.route('/downloadStudF04', methods=['GET'])
 def download_StudF04():
