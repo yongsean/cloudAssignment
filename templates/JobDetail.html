@@ -275,6 +275,10 @@
     .button-back:hover {
         background-color: #0056b3; /* Adjust the hover background color to your preference */
     }
+
+    .content-about-us p{
+        line-height: 2.0;
+    }
 </style>
 
 <head>
@@ -282,6 +286,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <nav>
         <div class="homeNav">
@@ -304,7 +309,7 @@
 </head>
 
 <body>
-    <a href="/displayJobFind" class="button-back">Back to Search</a>
+    <a href="/displayJobFind" class="button-back"><i class="fa fa-arrow-left" style="font-size:36px"></i></a>
     <div class="job-header">
         <div class="company-about-content">
             <img src="{{ jobs[0].image_url }}" style="width: 250px; height: 150px; position: relative;">
