@@ -666,23 +666,32 @@ def studentApplyCompany():
                # Create a cursor
         cursor = db_conn.cursor()
         
-        # Execute the SELECT COUNT(*) query to get the total row count
+        # Calculate the total number of applications and items per page
+        total_applications = apply_result[0]
+        per_page = 6
+        
+        # Calculate the total number of pages
+        num_pages = (total_applications + per_page - 1) // per_page
+        
+        # Get the current page from the request args
+        current_page = request.args.get('page', 1, type=int)
+        
+        # Calculate the start and end indices for fetching applications
+        start_index = (current_page - 1) * per_page
+        end_index = start_index + per_page
+        
+        # Fetch the applications for the current page
         select_application = """
         SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
-        from companyApplication ca
-        LEFT JOIN job j on ca.job = j.jobId
-        LEFT JOIN company c on j.company = c.companyId
+        FROM companyApplication ca
+        LEFT JOIN job j ON ca.job = j.jobId
+        LEFT JOIN company c ON j.company = c.companyId
         WHERE ca.student=%s
+        LIMIT %s OFFSET %s
         """     
-        try:
-            cursor.execute(select_application, (apply_student_id,))
-            application_track = cursor.fetchall()
+        cursor.execute(select_application, (apply_student_id, per_page, start_index))
+        application_track = cursor.fetchall()
 
-            if not application_track:
-                return "No such company application"
-        except Exception as e:
-            return str(e)
-        
         cursor.close()
         # Initialize application object as an empty list
         application_objects = []
@@ -711,7 +720,7 @@ def studentApplyCompany():
             }
 
             application_objects.append(application_object)
-        return render_template('trackApplication.html', application=application_objects)
+        return render_template('trackApplication.html', application=application_objects, current_page=current_page, num_pages=num_pages)
     
     except Exception as e:
         db_conn.rollback()

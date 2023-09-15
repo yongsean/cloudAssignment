@@ -364,31 +364,28 @@
             <th style="width:180px;">Application Date</th>
             <th style="width:180px;">Application Status</th>
         </tr>
-        <tr>
-            <td>VeecoTech Solutions Sdn. Bhd</td>
-            <td>Web Developer</td>
-            <td>Sunway Nexis Soho, D-5-7 No.1, Jalan PJU 5/1 Dataran Sunway, Kota Damansara, 47810 Petaling
-                Jaya, Selangor, 47810, Selangor</td>
-            <td>09/09/2023</td>
-            <td><span class="badge badge-pending">Confirmed</span></td>
-        </tr>
         {% for applications in application %}
         <tr>
             <td>{{applications.company_name}}</td>
             <td>{{applications.job_position}}</td>
             <td>{{applications.job_location}}</td>
-            <td>{{applications.applyDateTime}}</td>
+            <td>{{applications.applyDateTime.strftime('%Y-%m-%d')}}</td>
             <td><span class="badge badge-pending">{{applications.status}}</span></td>  
         </tr>
         {% endfor %}
     </table>
 
     <div class="pagination">
-        <a href="#" class="prev">Previous</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#" class="next">Next</a>
+        <a href="{{ url_for('studentApplyCompany', page=1) }}" class="prev" {% if current_page == 1 %}style="display:none;"{% endif %}>Previous</a>
+
+        {% for page in range(1, num_pages + 1) %}
+            {% if page == current_page %}
+                <a href="#" class="active">{{ page }}</a>
+            {% else %}
+                <a href="{{ url_for('studentApplyCompany', page=page) }}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <a href="{{ url_for('studentApplyCompany', page=num_pages) }}" class="next" {% if current_page == num_pages or num_pages == 0 %}style="display:none;"{% endif %}>Next</a>
     </div>
 </body>
