@@ -292,6 +292,9 @@
     </div>
     <hr>
 
+    {% if jobs[0].job_id in session['applied_jobs'] %}
+    <p>You have already applied for this job.</p>
+    {% else %}
     <form action="/studentApplyCompany" autocomplete="on" name="job" method="POST">
         <div class="overall-job-details">
             <input type="hidden" name="apply-job-id" value="{{ jobs[0].job_id }}">
@@ -351,29 +354,29 @@
             </div>
         </div>
     </form>
+    {% endif %}
+    <script src="/bundles/bootstrap?v=lescQEuG5u4jd-GcVDBcbpUOSyTDIg0Kk9zHDX55GCw1"></script>
 
-        <script src="/bundles/bootstrap?v=lescQEuG5u4jd-GcVDBcbpUOSyTDIg0Kk9zHDX55GCw1"></script>
-
-        <script>
-            function toggleDropdown() {
-                var dropdownOptions = document.getElementById("dropdownOptions");
-                if (dropdownOptions.style.display === "block") {
-                    dropdownOptions.style.display = "none";
-                } else {
-                    dropdownOptions.style.display = "block";
-                }
+    <script>
+        function toggleDropdown() {
+            var dropdownOptions = document.getElementById("dropdownOptions");
+            if (dropdownOptions.style.display === "block") {
+                dropdownOptions.style.display = "none";
+            } else {
+                dropdownOptions.style.display = "block";
             }
+        }
 
-            // Add a click event listener to the document
-            document.addEventListener("click", function (event) {
-                var dropdown = document.querySelector(".dropdown");
-                if (!dropdown.contains(event.target)) {
-                    // Clicked outside the dropdown, so close it
-                    var dropdownOptions = document.getElementById("dropdownOptions");
-                    dropdownOptions.style.display = "none";
-                }
-            });
-        </script>
+        // Add a click event listener to the document
+        document.addEventListener("click", function (event) {
+            var dropdown = document.querySelector(".dropdown");
+            if (!dropdown.contains(event.target)) {
+                // Clicked outside the dropdown, so close it
+                var dropdownOptions = document.getElementById("dropdownOptions");
+                dropdownOptions.style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>

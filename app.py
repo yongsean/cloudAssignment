@@ -637,6 +637,8 @@ def studentApplyCompany():
         apply_student_id = session['loggedInStudent']
         now = datetime.datetime.now()
 
+        session['applied_jobs'] = [apply_job_id]
+        
         insert_application_sql = "INSERT INTO companyApplication (applicationId, applyDateTime, status, student, job) VALUES (%s,%s,%s,%s,%s)"
         cursor = db_conn.cursor()
 
