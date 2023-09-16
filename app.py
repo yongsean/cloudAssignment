@@ -702,20 +702,24 @@ def calculate_pagination(total, per_page):
     end_index = start_index + per_page
     return num_pages, current_page, start_index, end_index
 
-def get_applications(cursor, student_id, per_page, start_index,search_query):
+def get_applications(cursor, student_id, per_page, start_index, search_query):
     select_application = """
     SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
     FROM companyApplication ca
     LEFT JOIN job j ON ca.job = j.jobId
     LEFT JOIN company c ON j.company = c.companyId
     WHERE ca.student=%s
-    LIMIT %s OFFSET %s
     """
+    
     if search_query:
         select_application += " AND c.name LIKE %s"
-        cursor.execute(select_application + " LIMIT %s OFFSET %s", (student_id, f"%{search_query}%", per_page, start_index))
+    
+    select_application += " LIMIT %s OFFSET %s"
+    
+    if search_query:
+        cursor.execute(select_application, (student_id, f"%{search_query}%", per_page, start_index))
     else:
-        cursor.execute(select_application + " LIMIT %s OFFSET %s", (student_id, per_page, start_index))
+        cursor.execute(select_application, (student_id, per_page, start_index))
 
     application_track = cursor.fetchall()
 
@@ -777,7 +781,6 @@ def applyCompany():
 
     # This line is outside the try-except block
     return redirect(url_for("studentApplyCompany"))
-
 
 
 
