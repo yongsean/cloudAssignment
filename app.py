@@ -738,16 +738,15 @@ def applyCompany():
         cursor.execute(insert_application_sql, (company_id, now, 'pending', apply_student_id, apply_job_id))
         db_conn.commit()
 
-        # Redirect to a success page or show a success message
-        return render_template("trackApplication.html")
-
     except Exception as e:
         db_conn.rollback()
-        return ''
-        # Exception will propagate, and you can handle it at a higher level or log it
+    # Handle the exception if needed
 
     finally:
         cursor.close()
+
+    # This line is outside the try-except block
+    return render_template("trackApplication.html")
 
 
 
