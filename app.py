@@ -746,7 +746,7 @@ def applyCompany():
         cursor.close()
 
     # This line is outside the try-except block
-    return render_template("trackApplication.html")
+    return redirect(url_for("studentApplyCompany"))
 
 
 
