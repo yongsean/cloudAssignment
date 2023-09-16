@@ -638,98 +638,82 @@ def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-').replace('<br>-', '-', 1)
 
 @app.route("/studentApplyCompany", methods=['POST', 'GET'])
-def studentApplyCompany():
+def student_apply_company():
     try:
         # Create a cursor
         cursor = db_conn.cursor()
-        
-        # Execute the SELECT COUNT(*) query to get the total row count
-        select_sql = "SELECT COUNT(*) as total FROM companyApplication"      
-        cursor.execute(select_sql)
-        apply_result = cursor.fetchone()
-        
-        cursor.close()
-        # Get the selected job_id from the form
-        company_id = int(apply_result[0]) + 1
-        apply_job_id = request.form.get('apply-job-id')
-        apply_student_id = session['loggedInStudent']
-        now = datetime.datetime.now()
 
-        session['applied_jobs'] = [apply_job_id]
-        insert_application_sql = "INSERT INTO companyApplication (applicationId, applyDateTime, status, student, job) VALUES (%s,%s,%s,%s,%s)"
-        cursor = db_conn.cursor()
+        # Get the total number of applications
+        total_applications = get_total_applications(cursor)
 
-        cursor.execute(insert_application_sql,(company_id,now,'pending',apply_student_id,apply_job_id))
-        db_conn.commit()
-
-        #Get the application information
-               # Create a cursor
-        cursor = db_conn.cursor()
-        
-        # Calculate the total number of applications and items per page
-        total_applications = apply_result[0]
+        # Get the current page and calculate pagination values
         per_page = 6
-        
-        # Calculate the total number of pages
-        num_pages = (total_applications + per_page - 1) // per_page
-        
-        # Get the current page from the request args
-        current_page = request.args.get('page', 1, type=int)
-        
-        # Calculate the start and end indices for fetching applications
-        start_index = (current_page - 1) * per_page
-        end_index = start_index + per_page
-        
-        # Fetch the applications for the current page
-        select_application = """
-        SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
-        FROM companyApplication ca
-        LEFT JOIN job j ON ca.job = j.jobId
-        LEFT JOIN company c ON j.company = c.companyId
-        WHERE ca.student=%s
-        LIMIT %s OFFSET %s
-        """     
-        cursor.execute(select_application, (apply_student_id, per_page, start_index))
-        application_track = cursor.fetchall()
+        num_pages, current_page, start_index, end_index = calculate_pagination(total_applications, per_page)
 
-        cursor.close()
-        # Initialize application object as an empty list
-        application_objects = []
+        # Fetch applications for the current page
+        application_objects = get_applications(cursor, session['loggedInStudent'], per_page, start_index)
 
-        # Append job details to job_objects
-        for row in application_track:
-            application_id = row[0]
-            applyDateTime = row[1]
-            status = row[2]
-            student = row[3]
-            job = row[4]
-            company_name=row[5]
-            job_position = row[6]
-            job_location = row[7]
-
-
-            application_object = {
-                "application_id": application_id,
-                "applyDateTime": applyDateTime,
-                "status": status,
-                "student": student,
-                "job": job,
-                "company_name":company_name,
-                "job_position": job_position,
-                "job_location": job_location
-            }
-
-            application_objects.append(application_object)
         return render_template('trackApplication.html', application=application_objects, current_page=current_page, num_pages=num_pages)
-    
+
     except Exception as e:
         db_conn.rollback()
 
     finally:
         cursor.close()
 
-    # Redirect back to the registration page with a success message
     return render_template("trackApplication.html")
+
+def get_total_applications(cursor):
+    # Execute the SELECT COUNT(*) query to get the total row count
+    select_sql = "SELECT COUNT(*) as total FROM companyApplication"
+    cursor.execute(select_sql)
+    apply_result = cursor.fetchone()
+    return apply_result[0]
+
+def calculate_pagination(total, per_page):
+    num_pages = (total + per_page - 1) // per_page
+    current_page = request.args.get('page', 1, type=int)
+    start_index = (current_page - 1) * per_page
+    end_index = start_index + per_page
+    return num_pages, current_page, start_index, end_index
+
+def get_applications(cursor, student_id, per_page, start_index):
+    select_application = """
+    SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
+    FROM companyApplication ca
+    LEFT JOIN job j ON ca.job = j.jobId
+    LEFT JOIN company c ON j.company = c.companyId
+    WHERE ca.student=%s
+    LIMIT %s OFFSET %s
+    """
+    cursor.execute(select_application, (student_id, per_page, start_index))
+    application_track = cursor.fetchall()
+
+    application_objects = []
+    for row in application_track:
+        application_id = row[0]
+        applyDateTime = row[1]
+        status = row[2]
+        student = row[3]
+        job = row[4]
+        company_name = row[5]
+        job_position = row[6]
+        job_location = row[7]
+
+        application_object = {
+            "application_id": application_id,
+            "applyDateTime": applyDateTime,
+            "status": status,
+            "student": student,
+            "job": job,
+            "company_name": company_name,
+            "job_position": job_position,
+            "job_location": job_location
+        }
+        application_objects.append(application_object)
+
+    return application_objects
+
 
 
 
