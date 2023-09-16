@@ -637,34 +637,42 @@ def display_job_details():
 def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-').replace('<br>-', '-', 1)
 
-@app.route("/studentApplyCompany", methods=['POST', 'GET'])
+@app.route("/studentApplyCompany")
 def studentApplyCompany():
     try:
+        # Get the search query from the request (if provided)
+        search_query = request.args.get('search', '')
+
         # Create a cursor
         cursor = db_conn.cursor()
-
-        # Get the search input from the form
-        search_query = request.form.get('search', '')
 
         # Get the total number of applications
         total_applications = get_total_applications(cursor, search_query)
 
-        # Get the current page and calculate pagination values
-        per_page = 6
-        num_pages, current_page, start_index, end_index = calculate_pagination(total_applications, per_page)
+        # Define the number of applications per page
+        per_page = 6  # Adjust as needed
 
-        # Fetch applications for the current page, including the search filter
-        application_objects = get_applications(cursor, session['loggedInStudent'], per_page, start_index, search_query)
+        # Get the current page from the request or default to 1
+        current_page = request.args.get('page', default=1, type=int)
 
-        return render_template('trackApplication.html', application=application_objects, current_page=current_page, num_pages=num_pages)
+        # Calculate the total number of pages
+        num_pages = (total_applications + per_page - 1) // per_page
+
+        # Calculate the start and end indices for the current page
+        start_index = (current_page - 1) * per_page
+        end_index = start_index + per_page
+
+        # Get the applications for the current page
+        applications = get_applications(cursor, session['loggedInStudent'], per_page, start_index, search_query)
+
+        return render_template("trackApplication.html", applications=applications, current_page=current_page, num_pages=num_pages)
 
     except Exception as e:
-        db_conn.rollback()
+        # Handle exceptions here
+        return "An error occurred: " + str(e)
 
     finally:
         cursor.close()
-
-    return render_template("trackApplication.html")
 
 
 def get_total_applications(cursor, search_query):
