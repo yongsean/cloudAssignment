@@ -637,7 +637,7 @@ def display_job_details():
 def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-').replace('<br>-', '-', 1)
 
-@app.route("/studentApplyCompany")
+@app.route("/studentApplyCompany",methods=['POST', 'GET'])
 def studentApplyCompany():
     try:
         # Get the search query from the request (if provided)
