@@ -714,7 +714,41 @@ def get_applications(cursor, student_id, per_page, start_index):
 
     return application_objects
 
+@app.route("/applyCompany", methods=['POST'])
+def applyCompany():
+    try:
+        # Get the selected job_id from the form
+        apply_job_id = request.form.get('apply-job-id')
+        apply_student_id = session['loggedInStudent']
+        now = datetime.datetime.now()
 
+        # Create a cursor
+        cursor = db_conn.cursor()
+
+        # Get the next available application ID (you may need to adjust this logic)
+        cursor.execute("SELECT MAX(applicationId) FROM companyApplication")
+        max_id = cursor.fetchone()[0]
+        company_id = max_id + 1 if max_id is not None else 1
+
+        # Insert the application record into the database
+        insert_application_sql = """
+        INSERT INTO companyApplication (applicationId, applyDateTime, status, student, job)
+        VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(insert_application_sql, (company_id, now, 'pending', apply_student_id, apply_job_id))
+        db_conn.commit()
+
+        # Redirect to a success page or show a success message
+        return redirect(url_for('success_page'))
+
+    except Exception as e:
+        db_conn.rollback()
+
+        # Handle the error, redirect to an error page, or show an error message
+        return redirect(url_for('error_page'))
+
+    finally:
+        cursor.close()
 
 
 
