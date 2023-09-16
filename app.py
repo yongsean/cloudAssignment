@@ -743,6 +743,7 @@ def applyCompany():
 
     except Exception as e:
         db_conn.rollback()
+        return ''
         # Exception will propagate, and you can handle it at a higher level or log it
 
     finally:
