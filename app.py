@@ -739,13 +739,10 @@ def applyCompany():
         db_conn.commit()
 
         # Redirect to a success page or show a success message
-        return redirect(url_for('success_page'))
+        return render_template("trackApplication.html")
 
     except Exception as e:
         db_conn.rollback()
-
-        # Handle the error, redirect to an error page, or show an error message
-        return redirect(url_for('error_page'))
 
     finally:
         cursor.close()
