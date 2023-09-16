@@ -315,6 +315,14 @@
         background-color: #333;
         color: #fff;
     }
+
+    .button-back {
+        display: inline-block;
+        padding: 10px 20px;
+        color: black; /* Adjust the text color to your preference */
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 
 <head>
@@ -345,8 +353,8 @@
 
 <body>
     <div class="header">
-        <a href="/student_home" class="button-back"><i class="fa fa-arrow-left" style="font-size:36px"></i></a>
         <div class="track-header">
+            <a href="/student_home" class="button-back"><i class="fa fa-arrow-left" style="font-size:36px"></i></a>
             <h1>Track Company Application</h1>
         </div>
         <form action="/studentApplyCompany" autocomplete="on" name="apply" method="GET">
