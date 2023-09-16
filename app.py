@@ -666,6 +666,7 @@ def studentApplyCompany():
 
     return render_template("trackApplication.html")
 
+
 def get_total_applications(cursor, search_query):
     # Execute the SELECT COUNT(*) query to get the total row count
     select_sql = """
