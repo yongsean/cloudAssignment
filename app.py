@@ -482,6 +482,9 @@ def displayAllJobs():
     # Add the condition to check the company's status
     select_sql += " AND c.status = 'activated'"
 
+    # Add the condition to check numOfOperating greater than 0
+    select_sql += " AND j.numOfOperating > 0"
+
     try:
         with get_db_connection() as db_conn:
             with db_conn.cursor() as cursor:
