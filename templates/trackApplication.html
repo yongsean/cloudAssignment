@@ -364,13 +364,13 @@
             <th style="width:180px;">Application Date</th>
             <th style="width:180px;">Application Status</th>
         </tr>
-        {% for applications in application %}
+        {% for application in applications %}
         <tr>
-            <td>{{applications.company_name}}</td>
-            <td>{{applications.job_position}}</td>
-            <td>{{applications.job_location}}</td>
-            <td>{{applications.applyDateTime.strftime('%Y-%m-%d')}}</td>
-            <td><span class="badge badge-pending">{{applications.status}}</span></td>  
+            <td>{{ application.company_name }}</td>
+            <td>{{ application.job_position }}</td>
+            <td>{{ application.job_location }}</td>
+            <td>{{ application.applyDateTime.strftime('%Y-%m-%d') }}</td>
+            <td><span class="badge badge-pending">{{ application.status }}</span></td>  
         </tr>
         {% endfor %}
     </table>
