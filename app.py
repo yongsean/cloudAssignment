@@ -643,15 +643,18 @@ def studentApplyCompany():
         # Create a cursor
         cursor = db_conn.cursor()
 
+        # Get the search input from the form
+        search_query = request.form.get('search', '')
+
         # Get the total number of applications
-        total_applications = get_total_applications(cursor)
+        total_applications = get_total_applications(cursor, search_query)
 
         # Get the current page and calculate pagination values
         per_page = 6
         num_pages, current_page, start_index, end_index = calculate_pagination(total_applications, per_page)
 
-        # Fetch applications for the current page
-        application_objects = get_applications(cursor, session['loggedInStudent'], per_page, start_index)
+        # Fetch applications for the current page, including the search filter
+        application_objects = get_applications(cursor, session['loggedInStudent'], per_page, start_index, search_query)
 
         return render_template('trackApplication.html', application=application_objects, current_page=current_page, num_pages=num_pages)
 
@@ -663,12 +666,25 @@ def studentApplyCompany():
 
     return render_template("trackApplication.html")
 
-def get_total_applications(cursor):
+def get_total_applications(cursor, search_query):
     # Execute the SELECT COUNT(*) query to get the total row count
-    select_sql = "SELECT COUNT(*) as total FROM companyApplication"
-    cursor.execute(select_sql)
+    select_sql = """
+    SELECT COUNT(*) as total
+    FROM companyApplication ca
+    LEFT JOIN job j ON ca.job = j.jobId
+    LEFT JOIN company c ON j.company = c.companyId
+    WHERE ca.student=%s
+    """
+    
+    if search_query:
+        select_sql += " AND c.name LIKE %s"
+        cursor.execute(select_sql, (session['loggedInStudent'], f"%{search_query}%"))
+    else:
+        cursor.execute(select_sql, (session['loggedInStudent'],))
+    
     apply_result = cursor.fetchone()
     return apply_result[0]
+
 
 def calculate_pagination(total, per_page):
     num_pages = (total + per_page - 1) // per_page
@@ -677,7 +693,7 @@ def calculate_pagination(total, per_page):
     end_index = start_index + per_page
     return num_pages, current_page, start_index, end_index
 
-def get_applications(cursor, student_id, per_page, start_index):
+def get_applications(cursor, student_id, per_page, start_index,search_query):
     select_application = """
     SELECT ca.*, c.name AS company_name, j.jobPosition AS job_position, j.jobLocation AS job_location
     FROM companyApplication ca
@@ -686,7 +702,12 @@ def get_applications(cursor, student_id, per_page, start_index):
     WHERE ca.student=%s
     LIMIT %s OFFSET %s
     """
-    cursor.execute(select_application, (student_id, per_page, start_index))
+    if search_query:
+        select_application += " AND c.name LIKE %s"
+        cursor.execute(select_application + " LIMIT %s OFFSET %s", (student_id, f"%{search_query}%", per_page, start_index))
+    else:
+        cursor.execute(select_application + " LIMIT %s OFFSET %s", (student_id, per_page, start_index))
+
     application_track = cursor.fetchall()
 
     application_objects = []
