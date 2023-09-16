@@ -638,7 +638,7 @@ def replace_and_keep_hyphen(s):
     return s.replace('-', '<br>-').replace('<br>-', '-', 1)
 
 @app.route("/studentApplyCompany", methods=['POST', 'GET'])
-def student_apply_company():
+def studentApplyCompany():
     try:
         # Create a cursor
         cursor = db_conn.cursor()
